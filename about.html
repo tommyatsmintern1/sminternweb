@@ -4,40 +4,151 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About — SM Intern</title>
+  <meta name="description" content="Founded at the University of Exeter, SM Intern connects students with real internship opportunities at verified UK SMEs." />
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <div class="brand">
-        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="positions.html">Positions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="profile.html">Profile</a>
-        <a href="login.html">Login</a>
-      </nav>
-    </header>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
 
-    <main class="page-panel">
-      <h1>About SM Intern</h1>
-      <img src="your-photo.jpg" alt="Founder photo" style="max-width:180px;border-radius:8px;display:block;margin-bottom:16px;" />
-      <p> Im Tommy , the founder of SM Intern and an engineering student at the University of Exeter . I created this company to connect SMEs looking for growth with students looking for experience , creating a platform for meaningful collaborations. </p>
-      <p>SM Intern focuses on verified projects, clear expectations, and simple onboarding so students can gain real experience and businesses can access motivated, project-ready talent.</p>
-
-      <p>Founded at Exeter University</p>
-    </main>
-
-    <footer>
-      <span>Email: hello@smintern.co.uk</span>
-      <span>© 2026 SM Intern</span>
-      <span style="margin-left:16px;"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
-    </footer>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-mark">SM</div>
+      <span class="brand-name">SM <span>Intern</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="positions.html">Positions</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">Profile</a>
+      <a href="login.html"   id="nav-login"   class="btn-ghost">Sign in</a>
+      <a href="login.html"   id="nav-register" class="btn-accent">Register</a>
+      <a href="#"            id="nav-logout"   class="btn-ghost" style="display:none">Sign out</a>
+    </div>
   </div>
+</header>
+
+<div class="site-wrap">
+
+  <!-- HERO -->
+  <section style="padding:72px 0 56px;">
+    <div class="section-label">Our story</div>
+    <h1 class="page-title">Built at Exeter.<br>Built for <span class="accent-text">students.</span></h1>
+    <p style="font-size:1.05rem;max-width:560px;margin-top:18px;">
+      SM Intern was founded to solve a problem I saw firsthand — students hungry for real experience, and small businesses that needed motivated talent but couldn't access big graduate schemes.
+    </p>
+  </section>
+
+  <!-- FOUNDER -->
+  <section style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;" class="grid-2-founder">
+    <div class="card" style="padding:40px;">
+      <div class="section-label">Founder</div>
+      <h2 class="section-title" style="margin-bottom:20px;">Hey, I'm Tommy.</h2>
+      <p style="margin-bottom:16px;">
+        I'm an engineering student at the University of Exeter. While studying, I noticed a gap — local small businesses were struggling to find short-term project help, and students were stuck applying to the same saturated grad schemes.
+      </p>
+      <p style="margin-bottom:16px;">
+        SM Intern is my answer to that. A platform that connects verified, growth-focused SMEs with students who want real projects, not coffee runs.
+      </p>
+      <p>
+        The focus is on meaningful work: clear deliverables, proper onboarding, and outcomes that genuinely matter to both sides.
+      </p>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--bg);">T</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);">Tommy</div>
+          <div style="font-size:12px;color:var(--muted);">Founder · University of Exeter</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card">
+        <div style="font-size:28px;margin-bottom:12px;">🎯</div>
+        <div class="card-title">Our mission</div>
+        <p style="font-size:14px;margin-top:8px;">To make internship matching frictionless — giving students access to real work and businesses access to motivated, project-ready talent.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:28px;margin-bottom:12px;">🔒</div>
+        <div class="card-title">Our commitment</div>
+        <p style="font-size:14px;margin-top:8px;">Every business is verified before their position goes live. Students never pay a penny. Simple, transparent, trusted.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:28px;margin-bottom:12px;">🏛️</div>
+        <div class="card-title">Where we started</div>
+        <p style="font-size:14px;margin-top:8px;">Founded at the University of Exeter, SM Intern is built by a student, for students — with the needs of real UK businesses at its core.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="margin-top:56px;background:var(--surface);border:1px solid rgba(200,245,74,0.15);border-radius:var(--radius-xl);padding:44px;text-align:center;">
+    <h2 class="section-title" style="margin-bottom:12px;">Ready to get involved?</h2>
+    <p style="max-width:440px;margin:0 auto 28px;">Whether you're a student looking for your first real project or a business ready to hire, we'd love to hear from you.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="login.html" class="btn-primary">Create your account →</a>
+      <a href="contact.html" class="btn-secondary">Contact us</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="brand-mark" style="width:26px;height:26px;font-size:10px;border-radius:6px;">SM</div>
+      <span>© 2026 SM Intern</span>
+    </div>
+    <span>hello@smintern.co.uk</span>
+    <div style="display:flex;gap:16px;">
+      <a href="https://www.linkedin.com/company/smintern" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+    authDomain: "sminternweb.firebaseapp.com",
+    projectId: "sminternweb",
+    storageBucket: "sminternweb.firebasestorage.app",
+    messagingSenderId: "132023235004",
+    appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const navProfile  = document.getElementById('nav-profile');
+  const navLogin    = document.getElementById('nav-login');
+  const navRegister = document.getElementById('nav-register');
+  const navLogout   = document.getElementById('nav-logout');
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      navProfile.style.display  = 'inline-flex';
+      navLogout.style.display   = 'inline-flex';
+      navLogin.style.display    = 'none';
+      navRegister.style.display = 'none';
+    } else {
+      navProfile.style.display  = 'none';
+      navLogout.style.display   = 'none';
+      navLogin.style.display    = 'inline-flex';
+      navRegister.style.display = 'inline-flex';
+    }
+  });
+  navLogout.addEventListener('click', async e => { e.preventDefault(); await signOut(auth); window.location.href = 'index.html'; });
+</script>
+<style>
+  @media (max-width: 720px) {
+    .grid-2-founder { grid-template-columns: 1fr !important; }
+  }
+</style>
 </body>
 </html>
