@@ -3,227 +3,374 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SM Intern — Home</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>SM Intern — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0c10; --surface: #13151c; --border: rgba(255,255,255,0.07);
+      --accent: #c8f54a; --accent2: #4af5c8; --text: #e8eaf0; --muted: #6b7080;
+      --error: #f5564a; --radius: 14px;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100dvh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(200,245,74,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(74,245,200,0.06) 0%, transparent 70%);
+    }
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .card {
+      position: relative; z-index: 1;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; width: 100%; max-width: 420px;
+      padding: 44px 40px 40px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      animation: rise 0.5s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; }
+    .brand-mark {
+      width: 32px; height: 32px; background: var(--accent); border-radius: 8px;
+      display: grid; place-items: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
+      color: #0b0c10; letter-spacing: -0.5px; flex-shrink: 0;
+    }
+    .brand-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -0.3px; color: var(--text); }
+    .brand-name span { color: var(--accent); }
+    .tabs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: rgba(255,255,255,0.04); border-radius: 10px;
+      padding: 4px; margin-bottom: 32px; position: relative;
+    }
+    .tab-btn {
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      background: none; border: none; color: var(--muted);
+      padding: 9px 0; border-radius: 7px; cursor: pointer;
+      position: relative; z-index: 1; transition: color 0.2s;
+    }
+    .tab-btn.active { color: var(--bg); }
+    .tab-slider {
+      position: absolute; top: 4px; left: 4px;
+      width: calc(50% - 4px); height: calc(100% - 8px);
+      background: var(--accent); border-radius: 7px;
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .tabs[data-tab="register"] .tab-slider { transform: translateX(100%); }
+    .form-headline {
+      font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800;
+      letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 6px;
+    }
+    .form-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadein 0.2s ease both; }
+    @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .field { margin-bottom: 16px; }
+    label {
+      display: block; font-size: 12px; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 7px;
+    }
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 13px 16px; font-family: 'DM Sans', sans-serif;
+      font-size: 15px; color: var(--text); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,245,74,0.12); }
+    input::placeholder { color: var(--muted); }
+    .btn-primary {
+      width: 100%; margin-top: 6px; padding: 14px;
+      background: var(--accent); border: none; border-radius: var(--radius);
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      color: var(--bg); cursor: pointer; letter-spacing: -0.2px;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-primary .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.2); border-top-color: var(--bg);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .msg {
+      display: none; border-radius: 10px; padding: 11px 14px;
+      font-size: 13.5px; margin-bottom: 18px; font-weight: 500;
+    }
+    .msg.error   { display: block; background: rgba(245,86,74,0.12); color: var(--error); border: 1px solid rgba(245,86,74,0.25); }
+    .msg.success { display: block; background: rgba(200,245,74,0.1); color: var(--accent); border: 1px solid rgba(200,245,74,0.25); }
+    .divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 22px 0; color: var(--muted); font-size: 12px;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .btn-google {
+      width: 100%; padding: 13px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 500; color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-google:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.14); }
+    .link-row { text-align: center; margin-top: 20px; font-size: 13px; color: var(--muted); }
+    .link-row a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .link-row a:hover { text-decoration: underline; }
+    #logged-in { display: none; text-align: center; }
+    #logged-in .avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid; place-items: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
+      color: var(--bg); margin: 0 auto 16px;
+    }
+    #logged-in h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    #logged-in p { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+    .btn-out {
+      padding: 12px 28px;
+      background: rgba(245,86,74,0.12); border: 1px solid rgba(245,86,74,0.25);
+      border-radius: var(--radius); color: var(--error);
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px;
+      cursor: pointer; transition: background 0.2s; margin-right: 10px;
+    }
+    .btn-out:hover { background: rgba(245,86,74,0.22); }
+    .btn-dash {
+      padding: 12px 28px; background: var(--accent); border: none;
+      border-radius: var(--radius); color: var(--bg);
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+    }
+    @media (max-width: 480px) {
+      .card { padding: 32px 22px 28px; border-radius: 0; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
-  
-  <div class="page-wrapper">
-    <header>
-      <div class="brand">
-        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
-      </div>
-      <nav id="nav-menu">
-        <a href="index.html">Home</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="positions.html">Positions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        
-        <a href="profile.html" id="nav-profile" style="display: none;">Profile</a>
-        <a href="login.html" id="nav-login">Login</a>
-        <a href="register.html" id="nav-register">Register</a>
-        <a href="#" id="nav-logout" style="display: none;">Logout</a>
-      </nav>
-    </header>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+<div class="card">
 
-    <section id="hero" class="page-panel">
-      <h1>Welcome back — sign in or create an account</h1>
-      <p>Sign in to manage your profile and applications.</p>
-
-      <div class="auth-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
-        <div class="card feature-card" style="padding:20px;">
-          <h3>Sign in</h3>
-          <form id="sign-in-form">
-            <div class="form-group">
-              <label for="signin-email">Email</label>
-              <input id="signin-email" type="email" required />
-            </div>
-            <div class="form-group">
-              <label for="signin-password">Password</label>
-              <input id="signin-password" type="password" required />
-            </div>
-            <button class="button-primary" type="submit">Sign in</button>
-          </form>
-        </div>
-
-        <div class="card feature-card" style="padding:20px;">
-          <h3>Create account</h3>
-          <form id="sign-up-form">
-            <div class="form-group">
-              <label for="signup-email">Email</label>
-              <input id="signup-email" type="email" required />
-            </div>
-            <div class="form-group">
-              <label for="signup-password">Password</label>
-              <input id="signup-password" type="password" required minlength="6" />
-            </div>
-            <button class="button-primary" type="submit">Create account</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section id="how-it-works" class="page-panel">
-      <h2 class="section-headline">How it works</h2>
-      <div class="card-grid">
-        <div class="feature-card">
-          <h3>For Students</h3>
-          <ol class="benefit-list">
-            <li>Browse verified project listings.</li>
-            <li>Apply with a short proposal.</li>
-            <li>Join and contribute to real work.</li>
-          </ol>
-        </div>
-        <div class="feature-card">
-          <h3>For Businesses</h3>
-          <ol class="benefit-list">
-            <li>Post a project brief.</li>
-            <li>Get curated candidate matches.</li>
-            <li>Onboard and mentor a short-term intern.</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <section id="why" class="page-panel">
-      <h2 class="section-headline">Why SM Intern</h2>
-      <div class="benefits-grid">
-        <div class="feature-card">
-          <h3>Students</h3>
-          <ul class="benefit-list">
-            <li>Real projects, real outcomes.</li>
-            <li>Mentorship and references.</li>
-            <li>Flexible, paid opportunities.</li>
-          </ul>
-        </div>
-        <div class="feature-card">
-          <h3>Businesses</h3>
-          <ul class="benefit-list">
-            <li>Low-friction hiring for short projects.</li>
-            <li>Cost-effective access to motivated talent.</li>
-            <li>Structured onboarding templates.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="verification" class="page-panel">
-      <h2 class="section-headline">Every listing is verified</h2>
-      <p>We verify every business to protect students. Here's what that means:</p>
-      <div class="card-grid">
-        <div class="feature-card">
-          <h3>Companies House check</h3>
-          <p>Confirmed real, registered UK company.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Online presence</h3>
-          <p>Working website or active social media verified.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Email confirmation</h3>
-          <p>Direct contact email verified and on file.</p>
-        </div>
-      </div>
-      <p><strong>Every verified business displays the SM Intern verification badge.</strong></p>
-    </section>
-
-    <section id="pricing" class="page-panel">
-      <h2 class="section-headline">Pricing</h2>
-      <div class="card-grid">
-        <div class="feature-card">
-          <h3>Per-project</h3>
-          <p><strong>£89</strong></p>
-          <p>One-off listing with verification badge.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Pro per-project</h3>
-          <p><strong>£149</strong></p>
-          <p>One-off listing, verification badge, and candidate shortlisting by our team.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Subscription</h3>
-          <p><strong>£49/month</strong></p>
-          <p>Unlimited listings, verified badge, priority placement. Recurring or multiple needs.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Pro subscription</h3>
-          <p><strong>£99/month</strong></p>
-          <p>We shortlist your candidates for you on every post.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <span>Email: hello@smintern.co.uk</span>
-      <span><a href="https://www.linkedin.com/company/smintern">LinkedIn</a></span>
-      <span>© 2026 SM Intern</span>
-    </footer>
+  <div class="brand">
+    <div class="brand-mark">SM</div>
+    <div class="brand-name">SM <span>Intern</span></div>
   </div>
 
-  <script type="module">
-    import { signIn, signUp, signOut, onAuth } from './assets/js/firebase-auth.js';
+  <div id="auth-section">
+    <div class="tabs" id="tabs" data-tab="login">
+      <div class="tab-slider"></div>
+      <button class="tab-btn active" data-target="login">Sign in</button>
+      <button class="tab-btn" data-target="register">Register</button>
+    </div>
 
-    // Nav elements
-    const navProfile = document.getElementById('nav-profile');
-    const navLogin = document.getElementById('nav-login');
-    const navRegister = document.getElementById('nav-register');
-    const navLogout = document.getElementById('nav-logout');
+    <!-- LOGIN -->
+    <div class="panel active" id="panel-login">
+      <h1 class="form-headline">Welcome back.</h1>
+      <p class="form-sub">Sign in to your SM Intern account.</p>
+      <div class="msg" id="login-msg"></div>
+      <button class="btn-google" id="google-login">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58Z"/></svg>
+        Continue with Google
+      </button>
+      <div class="divider">or</div>
+      <form id="form-login" novalidate>
+        <div class="field">
+          <label for="l-email">Email</label>
+          <input id="l-email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="l-pass">Password</label>
+          <input id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+        <button class="btn-primary" type="submit" id="btn-login">Sign in</button>
+      </form>
+      <div class="link-row"><a href="#" id="forgot-link">Forgot password?</a></div>
+    </div>
 
-    // Wire auth state to navigation visibility
-    onAuth((user) => {
-      if (user) {
-        navProfile.style.display = 'inline-block';
-        navLogout.style.display = 'inline-block';
-        navLogin.style.display = 'none';
-        navRegister.style.display = 'none';
-      } else {
-        navProfile.style.display = 'none';
-        navLogout.style.display = 'none';
-        navLogin.style.display = 'inline-block';
-        navRegister.style.display = 'inline-block';
-      }
+    <!-- REGISTER -->
+    <div class="panel" id="panel-register">
+      <h1 class="form-headline">Create account.</h1>
+      <p class="form-sub">Join SM Intern — students &amp; businesses welcome.</p>
+      <div class="msg" id="register-msg"></div>
+      <button class="btn-google" id="google-register">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58Z"/></svg>
+        Sign up with Google
+      </button>
+      <div class="divider">or</div>
+      <form id="form-register" novalidate>
+        <div class="field">
+          <label for="r-email">Email</label>
+          <input id="r-email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="r-pass">Password</label>
+          <input id="r-pass" type="password" placeholder="Min. 6 characters" autocomplete="new-password" required minlength="6" />
+        </div>
+        <button class="btn-primary" type="submit" id="btn-register">Create account</button>
+      </form>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div class="panel" id="panel-forgot">
+      <h1 class="form-headline">Reset password.</h1>
+      <p class="form-sub">We'll email you a reset link.</p>
+      <div class="msg" id="forgot-msg"></div>
+      <form id="form-forgot" novalidate>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <button class="btn-primary" type="submit" id="btn-forgot">Send reset email</button>
+      </form>
+      <div class="link-row"><a href="#" id="back-to-login">← Back to sign in</a></div>
+    </div>
+  </div>
+
+  <!-- LOGGED IN -->
+  <div id="logged-in">
+    <div class="avatar" id="user-avatar">?</div>
+    <h2 id="user-name">Welcome back!</h2>
+    <p id="user-email-display">—</p>
+    <div>
+      <button class="btn-out" id="btn-logout">Sign out</button>
+      <a class="btn-dash" href="profile.html">My profile →</a>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword,
+    signInWithPopup, GoogleAuthProvider,
+    sendPasswordResetEmail, signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // ── REPLACE WITH YOUR FIREBASE CONFIG ─────────────────────────
+  const firebaseConfig = {
+    apiKey:            "YOUR_API_KEY",
+    authDomain:        "YOUR_PROJECT.firebaseapp.com",
+    projectId:         "YOUR_PROJECT_ID",
+    storageBucket:     "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId:             "YOUR_APP_ID"
+  };
+  // ──────────────────────────────────────────────────────────────
+
+  const app      = initializeApp(firebaseConfig);
+  const auth     = getAuth(app);
+  const gProvider = new GoogleAuthProvider();
+
+  const $  = id => document.getElementById(id);
+  const showMsg = (id, text, type) => { const el=$(id); el.textContent=text; el.className=`msg ${type}`; };
+  const setLoading = (btn, on) => {
+    btn.disabled = on;
+    btn.innerHTML = on ? '<span class="spinner"></span> Please wait…' : btn.dataset.label;
+  };
+  ['btn-login','btn-register','btn-forgot'].forEach(id => { const b=$(id); if(b) b.dataset.label=b.textContent; });
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.target;
+      $('tabs').dataset.tab = t;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b===btn));
+      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id===`panel-${t}`));
     });
+  });
 
-    navLogout.addEventListener('click', async (e) => {
-      e.preventDefault();
-      try {
-        await signOut();
-        window.location.reload();
-      } catch (err) {
-        console.error('Sign out failed', err);
-      }
-    });
+  // Forgot password flow
+  $('forgot-link').addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    $('panel-forgot').classList.add('active');
+  });
+  $('back-to-login').addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    $('panel-login').classList.add('active');
+    $('tabs').dataset.tab = 'login';
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.target==='login'));
+  });
 
-    // Sign in form
-    const signInForm = document.getElementById('sign-in-form');
-    signInForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('signin-email').value.trim();
-      const password = document.getElementById('signin-password').value;
-      try {
-        await signIn(email, password);
-        window.location.href = 'profile.html';
-      } catch (err) {
-        alert(err.message || 'Sign in failed');
-      }
-    });
+  // Auth state
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      $('auth-section').style.display = 'none';
+      $('logged-in').style.display = 'block';
+      $('user-avatar').textContent = (user.displayName||user.email||'?')[0].toUpperCase();
+      $('user-name').textContent = user.displayName || 'Welcome back!';
+      $('user-email-display').textContent = user.email;
+    } else {
+      $('auth-section').style.display = 'block';
+      $('logged-in').style.display = 'none';
+    }
+  });
 
-    // Sign up form
-    const signUpForm = document.getElementById('sign-up-form');
-    signUpForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('signup-email').value.trim();
-      const password = document.getElementById('signup-password').value;
-      try {
-        await signUp(email, password);
-        window.location.href = 'profile.html';
-      } catch (err) {
-        alert(err.message || 'Sign up failed');
-      }
-    });
-  </script>
+  // Sign in
+  $('form-login').addEventListener('submit', async e => {
+    e.preventDefault(); const btn=$('btn-login'); setLoading(btn,true);
+    try { await signInWithEmailAndPassword(auth, $('l-email').value.trim(), $('l-pass').value); window.location.href='profile.html'; }
+    catch(err) { showMsg('login-msg', friendlyError(err.code), 'error'); setLoading(btn,false); }
+  });
 
+  // Register
+  $('form-register').addEventListener('submit', async e => {
+    e.preventDefault(); const btn=$('btn-register'); setLoading(btn,true);
+    try { await createUserWithEmailAndPassword(auth, $('r-email').value.trim(), $('r-pass').value); window.location.href='profile.html'; }
+    catch(err) { showMsg('register-msg', friendlyError(err.code), 'error'); setLoading(btn,false); }
+  });
+
+  // Forgot password
+  $('form-forgot').addEventListener('submit', async e => {
+    e.preventDefault(); const btn=$('btn-forgot'); setLoading(btn,true);
+    try { await sendPasswordResetEmail(auth, $('f-email').value.trim()); showMsg('forgot-msg','Reset email sent — check your inbox.','success'); }
+    catch(err) { showMsg('forgot-msg', friendlyError(err.code), 'error'); }
+    setLoading(btn,false);
+  });
+
+  // Google
+  const googleAuth = async (msgId) => {
+    try { await signInWithPopup(auth, gProvider); window.location.href='profile.html'; }
+    catch(err) { if(err.code!=='auth/popup-closed-by-user') showMsg(msgId, friendlyError(err.code), 'error'); }
+  };
+  $('google-login').addEventListener('click',    () => googleAuth('login-msg'));
+  $('google-register').addEventListener('click', () => googleAuth('register-msg'));
+
+  // Sign out
+  $('btn-logout').addEventListener('click', async () => { await signOut(auth); window.location.reload(); });
+
+  function friendlyError(code) {
+    return ({
+      'auth/user-not-found':       'No account found with that email.',
+      'auth/wrong-password':       'Incorrect password — please try again.',
+      'auth/invalid-email':        'Please enter a valid email address.',
+      'auth/email-already-in-use': 'An account with that email already exists.',
+      'auth/weak-password':        'Password must be at least 6 characters.',
+      'auth/too-many-requests':    'Too many attempts. Please wait a moment.',
+      'auth/network-request-failed':'Network error — check your connection.',
+      'auth/invalid-credential':   'Incorrect email or password.',
+    }[code]) || 'Something went wrong. Please try again.';
+  }
+</script>
 </body>
 </html>
