@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Positions — SM Intern</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="brand">
+        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="positions.html">Positions</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="profile.html">Profile</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </header>
+
+    <main class="page-panel">
+      <h1>Positions</h1>
+      <p class="page-intro">Public listings are currently managed directly through the admin console.</p>
+
+      <section class="page-panel">
+        <h2>Available roles</h2>
+        <p>Positions are currently hidden until you add them via admin. Add new roles, descriptions, logos, and remove entries from the dashboard.</p>
+
+        <div class="filter-bar">
+          <label>
+            Location
+            <input id="locationFilter" list="locationOptions" placeholder="All UK" />
+            <datalist id="locationOptions"></datalist>
+          </label>
+
+          <label>
+            Subject
+            <input id="subjectFilter" list="subjectOptions" placeholder="All subjects" />
+            <datalist id="subjectOptions"></datalist>
+          </label>
+
+          <button class="button-secondary" id="clearFilters">Clear</button>
+        </div>
+
+        <div id="listings" class="grid-cards" aria-live="polite">
+          <p>No public positions are available yet. Log in to the admin panel to add roles.</p>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <h2>Join the waitlist</h2>
+        <p>We’re gathering verified projects — join the waitlist to be notified.</p>
+        <iframe data-tally-src="https://tally.so/embed/vGdgvg?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="273" frameborder="0" marginheight="0" marginwidth="0" title="Registration form"></iframe>
+        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+      </section>
+
+      <script>
+        const API_URL = '/api/positions';
+        const mainCities = [
+          'London','Birmingham','Manchester','Leeds','Glasgow','Edinburgh','Liverpool','Bristol','Sheffield','Newcastle','Cambridge'
+        ];
+
+        let positionsAll = [];
+        let filteredPositions = [];
+        const PAGE_SIZE = 6;
+        let displayedCount = PAGE_SIZE;
+
+        const locationSelect = document.getElementById('locationFilter');
+        const subjectSelect = document.getElementById('subjectFilter');
+        const listings = document.getElementById('listings');
+        const clearBtn = document.getElementById('clearFilters');
+
+        async function loadPositions() {
+          try {
+            const resp = await fetch(API_URL);
+            if (!resp.ok) throw new Error('fetch');
+            positionsAll = await resp.json();
+          } catch (err) {
+            positionsAll = [];
+          }
+        }
+
+        function populateFilters() {
+          const locList = document.getElementById('locationOptions');
+          mainCities.forEach(city => {
+            const opt = document.createElement('option');
+            opt.value = city;
+            locList.appendChild(opt);
+          });
+
+          const subjects = Array.from(new Set(positionsAll.map(p => p.subject))).sort();
+          const subList = document.getElementById('subjectOptions');
+          subList.innerHTML = '';
+          subjects.forEach(sub => {
+            const opt = document.createElement('option');
+            opt.value = sub;
+            subList.appendChild(opt);
+          });
+        }
+
+        function render(list) {
+          listings.innerHTML = '';
+          if (!list.length) {
+            listings.innerHTML = '<p>No public positions are available yet. Log in to the admin panel to add roles.</p>';
+            return;
+          }
+          list.forEach(p => {
+              const card = document.createElement('article');
+              card.className = 'feature-card';
+              const logoSrc = p.logoUrl ? ((/^https?:\/\//i.test(p.logoUrl) || p.logoUrl.startsWith('/')) ? p.logoUrl : 'assets/' + p.logoUrl) : '';
+              card.innerHTML = `
+                <div class="card-head">
+                  <div>
+                    <h3>${p.title}</h3>
+                    <p class="muted" style="margin:6px 0 0;font-size:0.95rem;">${p.company} · ${p.city}${p.location && p.location !== p.city ? ' · ' + p.location : ''}</p>
+                  </div>
+                  <div class="tags"><span class="tag">${p.subject}</span></div>
+                </div>
+                ${logoSrc ? `<div style="margin:14px 0;display:flex;align-items:center;gap:12px;"><img src="${logoSrc}" alt="${p.company} logo" style="height:48px;width:auto;border-radius:12px;object-fit:contain;" onerror="this.onerror=null;this.src='assets/logo-light.svg'"></div>` : ''}
+                <p>${p.desc}</p>
+              `;
+              listings.appendChild(card);
+            });
+        }
+
+        function renderSlice() {
+          const slice = filteredPositions.slice(0, displayedCount);
+          render(slice);
+          if (loadMoreBtn) {
+            loadMoreBtn.style.display = (displayedCount < filteredPositions.length) ? 'inline-block' : 'none';
+          }
+        }
+
+        function applyFilters() {
+          const loc = (locationSelect.value || '').trim();
+          const sub = (subjectSelect.value || '').trim();
+          filteredPositions = positionsAll.slice();
+          if (loc && loc.toLowerCase() !== 'all') {
+            filteredPositions = filteredPositions.filter(p => p.city.toLowerCase() === loc.toLowerCase());
+          }
+          if (sub && sub.toLowerCase() !== 'all') {
+            filteredPositions = filteredPositions.filter(p => p.subject.toLowerCase() === sub.toLowerCase());
+          }
+          displayedCount = PAGE_SIZE;
+          renderSlice();
+        }
+
+        locationSelect.addEventListener('change', applyFilters);
+        subjectSelect.addEventListener('change', applyFilters);
+        clearBtn.addEventListener('click', () => {
+          locationSelect.value = '';
+          subjectSelect.value = '';
+          applyFilters();
+        });
+
+        let loadMoreBtn = null;
+        function createLoadMore() {
+          loadMoreBtn = document.createElement('button');
+          loadMoreBtn.className = 'button-secondary';
+          loadMoreBtn.textContent = 'Load more';
+          loadMoreBtn.style.marginTop = '18px';
+          listings.insertAdjacentElement('afterend', loadMoreBtn);
+          loadMoreBtn.addEventListener('click', () => {
+            displayedCount += PAGE_SIZE;
+            renderSlice();
+          });
+        }
+
+        async function init() {
+          await loadPositions();
+          populateFilters();
+          applyFilters();
+          createLoadMore();
+        }
+
+        init();
+      </script>
+    </main>
+
+    <footer>
+      <span>© 2026 SM Intern</span>
+    </footer>
+  </div>
+</body>
+</html>

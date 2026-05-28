@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SM Intern — Home</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <div class="page-wrapper">
+    <header>
+      <div class="brand">
+        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
+      </div>
+      <nav id="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="positions.html">Positions</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        
+        <a href="profile.html" id="nav-profile" style="display: none;">Profile</a>
+        <a href="login.html" id="nav-login">Login</a>
+        <a href="register.html" id="nav-register">Register</a>
+        <a href="#" id="nav-logout" style="display: none;">Logout</a>
+      </nav>
+    </header>
+
+    <section id="hero" class="page-panel">
+      <h1>Launch meaningful internships with local SMBs</h1>
+      <p>SM Intern matches students with verified, project-ready positions at growth-focused small businesses.</p>
+      <div style="margin:24px 0;">
+        <a href="register.html" class="button-primary">Create account</a>
+      </div>
+
+      <div id="waitlist">
+        <iframe data-tally-src="https://tally.so/embed/vGdgvg?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="273" frameborder="0" marginheight="0" marginwidth="0" title="Registration form"></iframe>
+        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="page-panel">
+      <h2 class="section-headline">How it works</h2>
+      <div class="card-grid">
+        <div class="feature-card">
+          <h3>For Students</h3>
+          <ol class="benefit-list">
+            <li>Browse verified project listings.</li>
+            <li>Apply with a short proposal.</li>
+            <li>Join and contribute to real work.</li>
+          </ol>
+        </div>
+        <div class="feature-card">
+          <h3>For Businesses</h3>
+          <ol class="benefit-list">
+            <li>Post a project brief.</li>
+            <li>Get curated candidate matches.</li>
+            <li>Onboard and mentor a short-term intern.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="page-panel">
+      <h2 class="section-headline">Why SM Intern</h2>
+      <div class="benefits-grid">
+        <div class="feature-card">
+          <h3>Students</h3>
+          <ul class="benefit-list">
+            <li>Real projects, real outcomes.</li>
+            <li>Mentorship and references.</li>
+            <li>Flexible, paid opportunities.</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h3>Businesses</h3>
+          <ul class="benefit-list">
+            <li>Low-friction hiring for short projects.</li>
+            <li>Cost-effective access to motivated talent.</li>
+            <li>Structured onboarding templates.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="verification" class="page-panel">
+      <h2 class="section-headline">Every listing is verified</h2>
+      <p>We verify every business to protect students. Here's what that means:</p>
+      <div class="card-grid">
+        <div class="feature-card">
+          <h3>Companies House check</h3>
+          <p>Confirmed real, registered UK company.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Online presence</h3>
+          <p>Working website or active social media verified.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Email confirmation</h3>
+          <p>Direct contact email verified and on file.</p>
+        </div>
+      </div>
+      <p><strong>Every verified business displays the SM Intern verification badge.</strong></p>
+    </section>
+
+    <section id="pricing" class="page-panel">
+      <h2 class="section-headline">Pricing</h2>
+      <div class="card-grid">
+        <div class="feature-card">
+          <h3>Per-project</h3>
+          <p><strong>£89</strong></p>
+          <p>One-off listing with verification badge.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Pro per-project</h3>
+          <p><strong>£149</strong></p>
+          <p>One-off listing, verification badge, and candidate shortlisting by our team.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Subscription</h3>
+          <p><strong>£49/month</strong></p>
+          <p>Unlimited listings, verified badge, priority placement. Recurring or multiple needs.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Pro subscription</h3>
+          <p><strong>£99/month</strong></p>
+          <p>We shortlist your candidates for you on every post.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Email: hello@smintern.co.uk</span>
+      <span><a href="https://www.linkedin.com/company/smintern">LinkedIn</a></span>
+      <span>© 2026 SM Intern</span>
+    </footer>
+  </div>
+
+  <script type="module">
+    // Import Firebase SDKs using production CDN links
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+      authDomain: "sminternweb.firebaseapp.com",
+      projectId: "sminternweb",
+      storageBucket: "sminternweb.firebasestorage.app",
+      messagingSenderId: "132023235004",
+      appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9",
+      measurementId: "G-KDHZE9Q56Q"
+    };
+
+    // Initialize Firebase Services
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Get Navigation Elements
+    const navProfile = document.getElementById('nav-profile');
+    const navLogin = document.getElementById('nav-login');
+    const navRegister = document.getElementById('nav-register');
+    const navLogout = document.getElementById('nav-logout');
+
+    // Monitor Authentication State change
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in -> Adjust navigation items
+        navProfile.style.display = 'inline-block';
+        navLogout.style.display = 'inline-block';
+        navLogin.style.display = 'none';
+        navRegister.style.display = 'none';
+        console.log("User logged in:", user.email);
+      } else {
+        // User is signed out -> Reset navigation items
+        navProfile.style.display = 'none';
+        navLogout.style.display = 'none';
+        navLogin.style.display = 'inline-block';
+        navRegister.style.display = 'inline-block';
+        console.log("No user signed in.");
+      }
+    });
+
+    // Handle Logout Click event
+    navLogout.addEventListener('click', (e) => {
+      e.preventDefault(); // Stop page from scrolling up on '#' click
+      signOut(auth).then(() => {
+        window.location.reload(); // Refresh page on successful sign out
+      }).catch((error) => {
+        console.error("Sign-out error:", error);
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SM Intern — Home</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <div class="page-wrapper">
+    <header>
+      <div class="brand">
+        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
+      </div>
+      <nav id="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="positions.html">Positions</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        
+        <a href="profile.html" id="nav-profile" style="display: none;">Profile</a>
+        <a href="login.html" id="nav-login">Login</a>
+        <a href="register.html" id="nav-register">Register</a>
+        <a href="#" id="nav-logout" style="display: none;">Logout</a>
+      </nav>
+    </header>
+
+    <section id="hero" class="page-panel">
+      <h1>Welcome back — sign in or create an account</h1>
+      <p>Sign in to manage your profile and applications.</p>
+
+      <div class="auth-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
+        <div class="card feature-card" style="padding:20px;">
+          <h3>Sign in</h3>
+          <form id="sign-in-form">
+            <div class="form-group">
+              <label for="signin-email">Email</label>
+              <input id="signin-email" type="email" required />
+            </div>
+            <div class="form-group">
+              <label for="signin-password">Password</label>
+              <input id="signin-password" type="password" required />
+            </div>
+            <button class="button-primary" type="submit">Sign in</button>
+          </form>
+        </div>
+
+        <div class="card feature-card" style="padding:20px;">
+          <h3>Create account</h3>
+          <form id="sign-up-form">
+            <div class="form-group">
+              <label for="signup-email">Email</label>
+              <input id="signup-email" type="email" required />
+            </div>
+            <div class="form-group">
+              <label for="signup-password">Password</label>
+              <input id="signup-password" type="password" required minlength="6" />
+            </div>
+            <button class="button-primary" type="submit">Create account</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="page-panel">
+      <h2 class="section-headline">How it works</h2>
+      <div class="card-grid">
+        <div class="feature-card">
+          <h3>For Students</h3>
+          <ol class="benefit-list">
+            <li>Browse verified project listings.</li>
+            <li>Apply with a short proposal.</li>
+            <li>Join and contribute to real work.</li>
+          </ol>
+        </div>
+        <div class="feature-card">
+          <h3>For Businesses</h3>
+          <ol class="benefit-list">
+            <li>Post a project brief.</li>
+            <li>Get curated candidate matches.</li>
+            <li>Onboard and mentor a short-term intern.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="page-panel">
+      <h2 class="section-headline">Why SM Intern</h2>
+      <div class="benefits-grid">
+        <div class="feature-card">
+          <h3>Students</h3>
+          <ul class="benefit-list">
+            <li>Real projects, real outcomes.</li>
+            <li>Mentorship and references.</li>
+            <li>Flexible, paid opportunities.</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h3>Businesses</h3>
+          <ul class="benefit-list">
+            <li>Low-friction hiring for short projects.</li>
+            <li>Cost-effective access to motivated talent.</li>
+            <li>Structured onboarding templates.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="verification" class="page-panel">
+      <h2 class="section-headline">Every listing is verified</h2>
+      <p>We verify every business to protect students. Here's what that means:</p>
+      <div class="card-grid">
+        <div class="feature-card">
+          <h3>Companies House check</h3>
+          <p>Confirmed real, registered UK company.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Online presence</h3>
+          <p>Working website or active social media verified.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Email confirmation</h3>
+          <p>Direct contact email verified and on file.</p>
+        </div>
+      </div>
+      <p><strong>Every verified business displays the SM Intern verification badge.</strong></p>
+    </section>
+
+    <section id="pricing" class="page-panel">
+      <h2 class="section-headline">Pricing</h2>
+      <div class="card-grid">
+        <div class="feature-card">
+          <h3>Per-project</h3>
+          <p><strong>£89</strong></p>
+          <p>One-off listing with verification badge.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Pro per-project</h3>
+          <p><strong>£149</strong></p>
+          <p>One-off listing, verification badge, and candidate shortlisting by our team.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Subscription</h3>
+          <p><strong>£49/month</strong></p>
+          <p>Unlimited listings, verified badge, priority placement. Recurring or multiple needs.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Pro subscription</h3>
+          <p><strong>£99/month</strong></p>
+          <p>We shortlist your candidates for you on every post.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Email: hello@smintern.co.uk</span>
+      <span><a href="https://www.linkedin.com/company/smintern">LinkedIn</a></span>
+      <span>© 2026 SM Intern</span>
+    </footer>
+  </div>
+
+  <script type="module">
+    import { signIn, signUp, signOut, onAuth } from './assets/js/firebase-auth.js';
+
+    // Nav elements
+    const navProfile = document.getElementById('nav-profile');
+    const navLogin = document.getElementById('nav-login');
+    const navRegister = document.getElementById('nav-register');
+    const navLogout = document.getElementById('nav-logout');
+
+    // Wire auth state to navigation visibility
+    onAuth((user) => {
+      if (user) {
+        navProfile.style.display = 'inline-block';
+        navLogout.style.display = 'inline-block';
+        navLogin.style.display = 'none';
+        navRegister.style.display = 'none';
+      } else {
+        navProfile.style.display = 'none';
+        navLogout.style.display = 'none';
+        navLogin.style.display = 'inline-block';
+        navRegister.style.display = 'inline-block';
+      }
+    });
+
+    navLogout.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await signOut();
+        window.location.reload();
+      } catch (err) {
+        console.error('Sign out failed', err);
+      }
+    });
+
+    // Sign in form
+    const signInForm = document.getElementById('sign-in-form');
+    signInForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      try {
+        await signIn(email, password);
+        window.location.href = 'profile.html';
+      } catch (err) {
+        alert(err.message || 'Sign in failed');
+      }
+    });
+
+    // Sign up form
+    const signUpForm = document.getElementById('sign-up-form');
+    signUpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      try {
+        await signUp(email, password);
+        window.location.href = 'profile.html';
+      } catch (err) {
+        alert(err.message || 'Sign up failed');
+      }
+    });
+  </script>
+
+</body>
+</html>

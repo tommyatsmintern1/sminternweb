@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Each user has a document at /users/{uid}
+    match /users/{userId} {
+      // Only the authenticated user may read or write their profile
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Applications are stored under users/{uid}/applications/{appId}
+      match /applications/{appId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Public collection for positions (read-only)
+    match /positions/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

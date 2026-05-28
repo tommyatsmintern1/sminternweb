@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SM Intern — Student Profile</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .profile-container { max-width: 900px; margin: 24px auto; padding: 20px; }
+    .card { background:#fff;border-radius:8px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,0.06);} 
+    .grid { display:grid; grid-template-columns: 1fr 360px; gap:20px; }
+    .form-group { margin-bottom:12px; }
+    .form-group label { display:block; font-weight:600; margin-bottom:6px; }
+    input[type=text], input[type=email], textarea, select { width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; }
+    button.button-primary { background:#000;color:#fff;padding:10px 14px;border-radius:6px;border:none;cursor:pointer }
+    #apps-list { margin-top:12px; }
+    .app-item { border:1px solid #eee; padding:10px; border-radius:6px; margin-bottom:8px; }
+    #loading { text-align:center; padding:40px; }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="brand">
+        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="positions.html">Positions</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="profile.html">Profile</a>
+        <a href="#" id="nav-logout">Logout</a>
+      </nav>
+    </header>
+
+    <div id="loading">Checking authorization...</div>
+
+    <section id="profile-content" style="display:none;">
+      <div class="profile-container">
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h2 style="margin-top:0;">Your Student Profile</h2>
+              <form id="profile-form">
+                <div class="form-group">
+                  <label>Account Email</label>
+                  <input type="email" id="display-email" disabled />
+                </div>
+                <div class="form-group">
+                  <label for="full-name">Full name</label>
+                  <input id="full-name" type="text" />
+                </div>
+                <div class="form-group">
+                  <label for="university">University / College</label>
+                  <input id="university" type="text" />
+                </div>
+                <div class="form-group">
+                  <label for="major">Field of study</label>
+                  <input id="major" type="text" />
+                </div>
+                <div class="form-group">
+                  <label for="grad-year">Graduation year</label>
+                  <select id="grad-year"><option>2026</option><option>2027</option><option>2028</option></select>
+                </div>
+                <div class="form-group">
+                  <label for="skills">Key skills (comma separated)</label>
+                  <input id="skills" type="text" />
+                </div>
+                <div class="form-group">
+                  <label for="bio">Short bio / pitch</label>
+                  <textarea id="bio" rows="4"></textarea>
+                </div>
+                <div style="display:flex;gap:8px;">
+                  <button type="submit" class="button-primary">Save profile</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card" style="margin-top:16px;">
+              <h3>Your Applications</h3>
+              <div id="apps-list">No applications yet.</div>
+              <hr />
+              <form id="app-form">
+                <div class="form-group"><label for="app-role">Position</label><input id="app-role" type="text" required /></div>
+                <div class="form-group"><label for="app-note">Note</label><input id="app-note" type="text" /></div>
+                <button type="submit" class="button-primary">Add application</button>
+              </form>
+            </div>
+          </div>
+
+          <aside>
+            <div class="card">
+              <h3>Account</h3>
+              <p id="account-email">—</p>
+              <button id="signout-btn" class="button-primary" style="background:#eee;color:#000;margin-top:8px;">Sign out</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Email: hello@smintern.co.uk</span>
+      <span><a href="https://www.linkedin.com/company/smintern">LinkedIn</a></span>
+      <span>© 2026 SM Intern</span>
+    </footer>
+  </div>
+
+  <script type="module">
+    import { signOut, onAuth } from './assets/js/firebase-auth.js';
+    import { saveProfile, loadProfile, loadApplications, addApplication } from './assets/js/profile.js';
+
+    const loading = document.getElementById('loading');
+    const profileContent = document.getElementById('profile-content');
+    const profileForm = document.getElementById('profile-form');
+    const displayEmail = document.getElementById('display-email');
+    const accountEmail = document.getElementById('account-email');
+    const signoutBtn = document.getElementById('signout-btn');
+    const appsList = document.getElementById('apps-list');
+    const appForm = document.getElementById('app-form');
+
+    let currentUid = null;
+
+    function renderApps(items) {
+      if (!items || items.length === 0) {
+        appsList.innerText = 'No applications yet.';
+        return;
+      }
+      appsList.innerHTML = items.map(a => `<div class="app-item"><strong>${a.role||'Untitled'}</strong><div style="font-size:13px;color:#555">${a.note||''}</div><div style="font-size:12px;color:#999">${a.createdAt||''}</div></div>`).join('');
+    }
+
+    onAuth(async (user) => {
+      if (user) {
+        currentUid = user.uid;
+        loading.style.display = 'none';
+        profileContent.style.display = '';
+        displayEmail.value = user.email;
+        accountEmail.innerText = user.email;
+
+        // load profile
+        try {
+          const p = await loadProfile(user.uid);
+          if (p) {
+            document.getElementById('full-name').value = p.fullName || '';
+            document.getElementById('university').value = p.university || '';
+            document.getElementById('major').value = p.major || '';
+            document.getElementById('grad-year').value = p.gradYear || '2026';
+            document.getElementById('skills').value = p.skills || '';
+            document.getElementById('bio').value = p.bio || '';
+          }
+        } catch (err) { console.error('Load profile failed', err); }
+
+        // load applications
+        try {
+          const apps = await loadApplications(user.uid);
+          renderApps(apps);
+        } catch (err) { console.error('Load apps failed', err); }
+      } else {
+        // not logged in -> redirect to login
+        window.location.href = 'login.html';
+      }
+    });
+
+    profileForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUid) return alert('Not signed in');
+      const data = {
+        fullName: document.getElementById('full-name').value.trim(),
+        university: document.getElementById('university').value.trim(),
+        major: document.getElementById('major').value.trim(),
+        gradYear: document.getElementById('grad-year').value,
+        skills: document.getElementById('skills').value.trim(),
+        bio: document.getElementById('bio').value.trim()
+      };
+      try {
+        await saveProfile(currentUid, data);
+        alert('Profile saved');
+      } catch (err) {
+        console.error(err);
+        alert('Failed to save profile');
+      }
+    });
+
+    signoutBtn.addEventListener('click', async () => {
+      try { await signOut(); window.location.href = 'login.html'; } catch (err) { console.error(err); }
+    });
+
+    appForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUid) return alert('Not signed in');
+      const role = document.getElementById('app-role').value.trim();
+      const note = document.getElementById('app-note').value.trim();
+      try {
+        await addApplication(currentUid, { role, note });
+        // reload apps
+        const apps = await loadApplications(currentUid);
+        renderApps(apps);
+        appForm.reset();
+      } catch (err) { console.error(err); alert('Failed to add application'); }
+    });
+  </script>
+
+</body>
+</html>
