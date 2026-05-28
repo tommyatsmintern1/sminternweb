@@ -16,8 +16,8 @@
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg); color: var(--text);
-      min-height: 100dvh; display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      min-height: 100dvh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
     }
     .bg-mesh {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -31,6 +31,14 @@
         linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
       background-size: 40px 40px;
     }
+    .back-home {
+      position: relative; z-index: 1;
+      margin-bottom: 16px;
+      font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+      text-decoration: none; transition: color 0.15s;
+    }
+    .back-home:hover { color: var(--text); }
     .card {
       position: relative; z-index: 1;
       background: var(--surface); border: 1px solid var(--border);
@@ -159,34 +167,32 @@
       cursor: pointer; text-decoration: none; display: inline-block;
     }
     @media (max-width: 480px) {
-      .card { padding: 32px 22px 28px; border-radius: 0; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; }
+      .card { padding: 32px 22px 28px; border-radius: 16px; width: calc(100% - 32px); }
     }
   </style>
 </head>
 <body>
 <div class="bg-mesh"></div>
 <div class="bg-grid"></div>
+<a href="index.html" class="back-home">← Back to SM Intern</a>
 <div class="card">
-
   <div class="brand">
     <div class="brand-mark">SM</div>
     <div class="brand-name">SM <span>Intern</span></div>
   </div>
-
   <div id="auth-section">
     <div class="tabs" id="tabs" data-tab="login">
       <div class="tab-slider"></div>
       <button class="tab-btn active" data-target="login">Sign in</button>
       <button class="tab-btn" data-target="register">Register</button>
     </div>
-
     <!-- LOGIN -->
     <div class="panel active" id="panel-login">
       <h1 class="form-headline">Welcome back.</h1>
       <p class="form-sub">Sign in to your SM Intern account.</p>
       <div class="msg" id="login-msg"></div>
       <button class="btn-google" id="google-login">
-        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58Z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58Z"/></svg>
         Continue with Google
       </button>
       <div class="divider">or</div>
@@ -199,18 +205,17 @@
           <label for="l-pass">Password</label>
           <input id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password" required />
         </div>
-        <button class="btn-primary" type="submit" id="btn-login">Sign in</button>
+        <button class="btn-primary" type="submit" id="btn-login" data-label="Sign in">Sign in</button>
       </form>
       <div class="link-row"><a href="#" id="forgot-link">Forgot password?</a></div>
     </div>
-
     <!-- REGISTER -->
     <div class="panel" id="panel-register">
       <h1 class="form-headline">Create account.</h1>
       <p class="form-sub">Join SM Intern — students &amp; businesses welcome.</p>
       <div class="msg" id="register-msg"></div>
       <button class="btn-google" id="google-register">
-        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58Z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58Z"/></svg>
         Sign up with Google
       </button>
       <div class="divider">or</div>
@@ -223,10 +228,9 @@
           <label for="r-pass">Password</label>
           <input id="r-pass" type="password" placeholder="Min. 6 characters" autocomplete="new-password" required minlength="6" />
         </div>
-        <button class="btn-primary" type="submit" id="btn-register">Create account</button>
+        <button class="btn-primary" type="submit" id="btn-register" data-label="Create account">Create account</button>
       </form>
     </div>
-
     <!-- FORGOT PASSWORD -->
     <div class="panel" id="panel-forgot">
       <h1 class="form-headline">Reset password.</h1>
@@ -237,13 +241,12 @@
           <label for="f-email">Email</label>
           <input id="f-email" type="email" placeholder="you@example.com" autocomplete="email" required />
         </div>
-        <button class="btn-primary" type="submit" id="btn-forgot">Send reset email</button>
+        <button class="btn-primary" type="submit" id="btn-forgot" data-label="Send reset email">Send reset email</button>
       </form>
       <div class="link-row"><a href="#" id="back-to-login">← Back to sign in</a></div>
     </div>
   </div>
-
-  <!-- LOGGED IN -->
+  <!-- LOGGED IN STATE -->
   <div id="logged-in">
     <div class="avatar" id="user-avatar">?</div>
     <h2 id="user-name">Welcome back!</h2>
@@ -253,7 +256,6 @@
       <a class="btn-dash" href="profile.html">My profile →</a>
     </div>
   </div>
-
 </div>
 
 <script type="module">
@@ -265,41 +267,39 @@
     sendPasswordResetEmail, signOut
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // ── REPLACE WITH YOUR FIREBASE CONFIG ─────────────────────────
   const firebaseConfig = {
-  apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
-  authDomain: "sminternweb.firebaseapp.com",
-  projectId: "sminternweb",
-  storageBucket: "sminternweb.firebasestorage.app",
-  messagingSenderId: "132023235004",
-  appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9",
-  measurementId: "G-KDHZE9Q56Q"
-};
-  // ──────────────────────────────────────────────────────────────
+    apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+    authDomain: "sminternweb.firebaseapp.com",
+    projectId: "sminternweb",
+    storageBucket: "sminternweb.firebasestorage.app",
+    messagingSenderId: "132023235004",
+    appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9"
+  };
 
   const app      = initializeApp(firebaseConfig);
   const auth     = getAuth(app);
   const gProvider = new GoogleAuthProvider();
-
   const $  = id => document.getElementById(id);
-  const showMsg = (id, text, type) => { const el=$(id); el.textContent=text; el.className=`msg ${type}`; };
+
+  const showMsg = (id, text, type) => {
+    const el = $(id); el.textContent = text; el.className = `msg ${type}`;
+  };
   const setLoading = (btn, on) => {
     btn.disabled = on;
     btn.innerHTML = on ? '<span class="spinner"></span> Please wait…' : btn.dataset.label;
   };
-  ['btn-login','btn-register','btn-forgot'].forEach(id => { const b=$(id); if(b) b.dataset.label=b.textContent; });
 
   // Tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const t = btn.dataset.target;
       $('tabs').dataset.tab = t;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b===btn));
-      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id===`panel-${t}`));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === `panel-${t}`));
     });
   });
 
-  // Forgot password flow
+  // Forgot password
   $('forgot-link').addEventListener('click', e => {
     e.preventDefault();
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -310,49 +310,70 @@
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     $('panel-login').classList.add('active');
     $('tabs').dataset.tab = 'login';
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.target==='login'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.target === 'login'));
   });
 
   // Auth state
   onAuthStateChanged(auth, user => {
     if (user) {
       $('auth-section').style.display = 'none';
-      $('logged-in').style.display = 'block';
-      $('user-avatar').textContent = (user.displayName||user.email||'?')[0].toUpperCase();
-      $('user-name').textContent = user.displayName || 'Welcome back!';
+      $('logged-in').style.display    = 'block';
+      $('user-avatar').textContent = (user.displayName || user.email || '?')[0].toUpperCase();
+      $('user-name').textContent   = user.displayName || 'Welcome back!';
       $('user-email-display').textContent = user.email;
     } else {
       $('auth-section').style.display = 'block';
-      $('logged-in').style.display = 'none';
+      $('logged-in').style.display    = 'none';
     }
   });
 
   // Sign in
   $('form-login').addEventListener('submit', async e => {
-    e.preventDefault(); const btn=$('btn-login'); setLoading(btn,true);
-    try { await signInWithEmailAndPassword(auth, $('l-email').value.trim(), $('l-pass').value); window.location.href='profile.html'; }
-    catch(err) { showMsg('login-msg', friendlyError(err.code), 'error'); setLoading(btn,false); }
+    e.preventDefault();
+    const btn = $('btn-login'); setLoading(btn, true);
+    try {
+      await signInWithEmailAndPassword(auth, $('l-email').value.trim(), $('l-pass').value);
+      window.location.href = 'profile.html';
+    } catch (err) {
+      showMsg('login-msg', friendlyError(err.code), 'error');
+      setLoading(btn, false);
+    }
   });
 
   // Register
   $('form-register').addEventListener('submit', async e => {
-    e.preventDefault(); const btn=$('btn-register'); setLoading(btn,true);
-    try { await createUserWithEmailAndPassword(auth, $('r-email').value.trim(), $('r-pass').value); window.location.href='profile.html'; }
-    catch(err) { showMsg('register-msg', friendlyError(err.code), 'error'); setLoading(btn,false); }
+    e.preventDefault();
+    const btn = $('btn-register'); setLoading(btn, true);
+    try {
+      await createUserWithEmailAndPassword(auth, $('r-email').value.trim(), $('r-pass').value);
+      window.location.href = 'profile.html';
+    } catch (err) {
+      showMsg('register-msg', friendlyError(err.code), 'error');
+      setLoading(btn, false);
+    }
   });
 
-  // Forgot password
+  // Forgot
   $('form-forgot').addEventListener('submit', async e => {
-    e.preventDefault(); const btn=$('btn-forgot'); setLoading(btn,true);
-    try { await sendPasswordResetEmail(auth, $('f-email').value.trim()); showMsg('forgot-msg','Reset email sent — check your inbox.','success'); }
-    catch(err) { showMsg('forgot-msg', friendlyError(err.code), 'error'); }
-    setLoading(btn,false);
+    e.preventDefault();
+    const btn = $('btn-forgot'); setLoading(btn, true);
+    try {
+      await sendPasswordResetEmail(auth, $('f-email').value.trim());
+      showMsg('forgot-msg', 'Reset email sent — check your inbox.', 'success');
+    } catch (err) {
+      showMsg('forgot-msg', friendlyError(err.code), 'error');
+    }
+    setLoading(btn, false);
   });
 
   // Google
   const googleAuth = async (msgId) => {
-    try { await signInWithPopup(auth, gProvider); window.location.href='profile.html'; }
-    catch(err) { if(err.code!=='auth/popup-closed-by-user') showMsg(msgId, friendlyError(err.code), 'error'); }
+    try {
+      await signInWithPopup(auth, gProvider);
+      window.location.href = 'profile.html';
+    } catch (err) {
+      if (err.code !== 'auth/popup-closed-by-user') showMsg(msgId, friendlyError(err.code), 'error');
+    }
   };
   $('google-login').addEventListener('click',    () => googleAuth('login-msg'));
   $('google-register').addEventListener('click', () => googleAuth('register-msg'));
@@ -362,14 +383,14 @@
 
   function friendlyError(code) {
     return ({
-      'auth/user-not-found':       'No account found with that email.',
-      'auth/wrong-password':       'Incorrect password — please try again.',
-      'auth/invalid-email':        'Please enter a valid email address.',
-      'auth/email-already-in-use': 'An account with that email already exists.',
-      'auth/weak-password':        'Password must be at least 6 characters.',
-      'auth/too-many-requests':    'Too many attempts. Please wait a moment.',
+      'auth/user-not-found':        'No account found with that email.',
+      'auth/wrong-password':        'Incorrect password — please try again.',
+      'auth/invalid-email':         'Please enter a valid email address.',
+      'auth/email-already-in-use':  'An account with that email already exists.',
+      'auth/weak-password':         'Password must be at least 6 characters.',
+      'auth/too-many-requests':     'Too many attempts. Please wait a moment.',
       'auth/network-request-failed':'Network error — check your connection.',
-      'auth/invalid-credential':   'Incorrect email or password.',
+      'auth/invalid-credential':    'Incorrect email or password.',
     }[code]) || 'Something went wrong. Please try again.';
   }
 </script>
