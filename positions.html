@@ -4,189 +4,208 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Positions — SM Intern</title>
+  <meta name="description" content="Browse verified internship positions at UK small businesses on SM Intern." />
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <div class="brand">
-        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="positions.html">Positions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="profile.html">Profile</a>
-        <a href="login.html">Login</a>
-      </nav>
-    </header>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
 
-    <main class="page-panel">
-      <h1>Positions</h1>
-      <p class="page-intro">Public listings are currently managed directly through the admin console.</p>
-
-      <section class="page-panel">
-        <h2>Available roles</h2>
-        <p>Positions are currently hidden until you add them via admin. Add new roles, descriptions, logos, and remove entries from the dashboard.</p>
-
-        <div class="filter-bar">
-          <label>
-            Location
-            <input id="locationFilter" list="locationOptions" placeholder="All UK" />
-            <datalist id="locationOptions"></datalist>
-          </label>
-
-          <label>
-            Subject
-            <input id="subjectFilter" list="subjectOptions" placeholder="All subjects" />
-            <datalist id="subjectOptions"></datalist>
-          </label>
-
-          <button class="button-secondary" id="clearFilters">Clear</button>
-        </div>
-
-        <div id="listings" class="grid-cards" aria-live="polite">
-          <p>No public positions are available yet. Log in to the admin panel to add roles.</p>
-        </div>
-      </section>
-
-      <section class="page-panel">
-        <h2>Join the waitlist</h2>
-        <p>We’re gathering verified projects — join the waitlist to be notified.</p>
-        <iframe data-tally-src="https://tally.so/embed/vGdgvg?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="273" frameborder="0" marginheight="0" marginwidth="0" title="Registration form"></iframe>
-        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
-      </section>
-
-      <script>
-        const API_URL = '/api/positions';
-        const mainCities = [
-          'London','Birmingham','Manchester','Leeds','Glasgow','Edinburgh','Liverpool','Bristol','Sheffield','Newcastle','Cambridge'
-        ];
-
-        let positionsAll = [];
-        let filteredPositions = [];
-        const PAGE_SIZE = 6;
-        let displayedCount = PAGE_SIZE;
-
-        const locationSelect = document.getElementById('locationFilter');
-        const subjectSelect = document.getElementById('subjectFilter');
-        const listings = document.getElementById('listings');
-        const clearBtn = document.getElementById('clearFilters');
-
-        async function loadPositions() {
-          try {
-            const resp = await fetch(API_URL);
-            if (!resp.ok) throw new Error('fetch');
-            positionsAll = await resp.json();
-          } catch (err) {
-            positionsAll = [];
-          }
-        }
-
-        function populateFilters() {
-          const locList = document.getElementById('locationOptions');
-          mainCities.forEach(city => {
-            const opt = document.createElement('option');
-            opt.value = city;
-            locList.appendChild(opt);
-          });
-
-          const subjects = Array.from(new Set(positionsAll.map(p => p.subject))).sort();
-          const subList = document.getElementById('subjectOptions');
-          subList.innerHTML = '';
-          subjects.forEach(sub => {
-            const opt = document.createElement('option');
-            opt.value = sub;
-            subList.appendChild(opt);
-          });
-        }
-
-        function render(list) {
-          listings.innerHTML = '';
-          if (!list.length) {
-            listings.innerHTML = '<p>No public positions are available yet. Log in to the admin panel to add roles.</p>';
-            return;
-          }
-          list.forEach(p => {
-              const card = document.createElement('article');
-              card.className = 'feature-card';
-              const logoSrc = p.logoUrl ? ((/^https?:\/\//i.test(p.logoUrl) || p.logoUrl.startsWith('/')) ? p.logoUrl : 'assets/' + p.logoUrl) : '';
-              card.innerHTML = `
-                <div class="card-head">
-                  <div>
-                    <h3>${p.title}</h3>
-                    <p class="muted" style="margin:6px 0 0;font-size:0.95rem;">${p.company} · ${p.city}${p.location && p.location !== p.city ? ' · ' + p.location : ''}</p>
-                  </div>
-                  <div class="tags"><span class="tag">${p.subject}</span></div>
-                </div>
-                ${logoSrc ? `<div style="margin:14px 0;display:flex;align-items:center;gap:12px;"><img src="${logoSrc}" alt="${p.company} logo" style="height:48px;width:auto;border-radius:12px;object-fit:contain;" onerror="this.onerror=null;this.src='assets/logo-light.svg'"></div>` : ''}
-                <p>${p.desc}</p>
-              `;
-              listings.appendChild(card);
-            });
-        }
-
-        function renderSlice() {
-          const slice = filteredPositions.slice(0, displayedCount);
-          render(slice);
-          if (loadMoreBtn) {
-            loadMoreBtn.style.display = (displayedCount < filteredPositions.length) ? 'inline-block' : 'none';
-          }
-        }
-
-        function applyFilters() {
-          const loc = (locationSelect.value || '').trim();
-          const sub = (subjectSelect.value || '').trim();
-          filteredPositions = positionsAll.slice();
-          if (loc && loc.toLowerCase() !== 'all') {
-            filteredPositions = filteredPositions.filter(p => p.city.toLowerCase() === loc.toLowerCase());
-          }
-          if (sub && sub.toLowerCase() !== 'all') {
-            filteredPositions = filteredPositions.filter(p => p.subject.toLowerCase() === sub.toLowerCase());
-          }
-          displayedCount = PAGE_SIZE;
-          renderSlice();
-        }
-
-        locationSelect.addEventListener('change', applyFilters);
-        subjectSelect.addEventListener('change', applyFilters);
-        clearBtn.addEventListener('click', () => {
-          locationSelect.value = '';
-          subjectSelect.value = '';
-          applyFilters();
-        });
-
-        let loadMoreBtn = null;
-        function createLoadMore() {
-          loadMoreBtn = document.createElement('button');
-          loadMoreBtn.className = 'button-secondary';
-          loadMoreBtn.textContent = 'Load more';
-          loadMoreBtn.style.marginTop = '18px';
-          listings.insertAdjacentElement('afterend', loadMoreBtn);
-          loadMoreBtn.addEventListener('click', () => {
-            displayedCount += PAGE_SIZE;
-            renderSlice();
-          });
-        }
-
-        async function init() {
-          await loadPositions();
-          populateFilters();
-          applyFilters();
-          createLoadMore();
-        }
-
-        init();
-      </script>
-    </main>
-
-    <footer>
-      <span>© 2026 SM Intern</span>
-      <span style="margin-left:16px;"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
-    </footer>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-mark">SM</div>
+      <span class="brand-name">SM <span>Intern</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="positions.html" class="active">Positions</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">Profile</a>
+      <a href="login.html"   id="nav-login"   class="btn-ghost">Sign in</a>
+      <a href="login.html"   id="nav-register" class="btn-accent">Register</a>
+      <a href="#"            id="nav-logout"   class="btn-ghost" style="display:none">Sign out</a>
+    </div>
   </div>
+</header>
+
+<div class="site-wrap">
+
+  <section style="padding:72px 0 48px;">
+    <div class="section-label">Opportunities</div>
+    <h1 class="page-title">Open positions.</h1>
+    <p style="font-size:1.05rem;max-width:480px;margin-top:18px;">
+      Verified, project-ready internship roles at growth-focused UK small businesses. Free to apply.
+    </p>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:28px;">
+    <div class="form-field" style="margin-bottom:0;min-width:200px;">
+      <label for="locationFilter">Location</label>
+      <input id="locationFilter" list="locationOptions" placeholder="All UK" />
+      <datalist id="locationOptions"></datalist>
+    </div>
+    <div class="form-field" style="margin-bottom:0;min-width:200px;">
+      <label for="subjectFilter">Subject area</label>
+      <input id="subjectFilter" list="subjectOptions" placeholder="All subjects" />
+      <datalist id="subjectOptions"></datalist>
+    </div>
+    <button class="btn-secondary" id="clearFilters" style="padding:12px 20px;font-size:13.5px;">Clear filters</button>
+  </div>
+
+  <!-- LISTINGS -->
+  <div id="listings" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;" aria-live="polite">
+    <!-- populated by JS -->
+  </div>
+  <div id="load-more-wrap" style="margin-top:24px;text-align:center;"></div>
+
+  <!-- WAITLIST -->
+  <section style="margin-top:56px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:44px;">
+    <div class="section-label">Stay in the loop</div>
+    <h2 class="section-title" style="margin-bottom:10px;">Join the waitlist</h2>
+    <p style="max-width:440px;margin-bottom:28px;">New positions are added regularly. Join to be notified when roles matching your interests are posted.</p>
+    <iframe data-tally-src="https://tally.so/embed/vGdgvg?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="273" frameborder="0" marginheight="0" marginwidth="0" title="Waitlist form"></iframe>
+    <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="brand-mark" style="width:26px;height:26px;font-size:10px;border-radius:6px;">SM</div>
+      <span>© 2026 SM Intern</span>
+    </div>
+    <span>hello@smintern.co.uk</span>
+    <div style="display:flex;gap:16px;">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+    authDomain: "sminternweb.firebaseapp.com",
+    projectId: "sminternweb",
+    storageBucket: "sminternweb.firebasestorage.app",
+    messagingSenderId: "132023235004",
+    appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const navProfile  = document.getElementById('nav-profile');
+  const navLogin    = document.getElementById('nav-login');
+  const navRegister = document.getElementById('nav-register');
+  const navLogout   = document.getElementById('nav-logout');
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      navProfile.style.display  = 'inline-flex'; navLogout.style.display   = 'inline-flex';
+      navLogin.style.display    = 'none';         navRegister.style.display = 'none';
+    } else {
+      navProfile.style.display  = 'none';         navLogout.style.display   = 'none';
+      navLogin.style.display    = 'inline-flex';  navRegister.style.display = 'inline-flex';
+    }
+  });
+  navLogout.addEventListener('click', async e => { e.preventDefault(); await signOut(auth); window.location.href = 'index.html'; });
+</script>
+
+<script>
+  const API_URL = '/api/positions';
+  const mainCities = ['London','Birmingham','Manchester','Leeds','Glasgow','Edinburgh','Liverpool','Bristol','Sheffield','Newcastle','Cambridge','Exeter'];
+  let positionsAll = [], filteredPositions = [];
+  const PAGE_SIZE = 9;
+  let displayedCount = PAGE_SIZE;
+
+  const locationInput = document.getElementById('locationFilter');
+  const subjectInput  = document.getElementById('subjectFilter');
+  const listings      = document.getElementById('listings');
+  const clearBtn      = document.getElementById('clearFilters');
+  const loadMoreWrap  = document.getElementById('load-more-wrap');
+
+  async function loadPositions() {
+    try {
+      const resp = await fetch(API_URL);
+      if (!resp.ok) throw new Error('fetch');
+      positionsAll = await resp.json();
+    } catch { positionsAll = []; }
+  }
+
+  function populateFilters() {
+    const locList = document.getElementById('locationOptions');
+    mainCities.forEach(city => { const o = document.createElement('option'); o.value = city; locList.appendChild(o); });
+    const subjects = Array.from(new Set(positionsAll.map(p => p.subject))).sort();
+    const subList = document.getElementById('subjectOptions');
+    subList.innerHTML = '';
+    subjects.forEach(sub => { const o = document.createElement('option'); o.value = sub; subList.appendChild(o); });
+  }
+
+  function renderEmpty() {
+    listings.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:56px 24px;">
+        <div style="font-size:36px;margin-bottom:16px;">📋</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:8px;color:var(--text);">No positions yet</div>
+        <p style="font-size:14px;max-width:340px;margin:0 auto 24px;">Positions are added as businesses are verified. Join the waitlist below to be notified.</p>
+      </div>`;
+  }
+
+  function renderSlice() {
+    listings.innerHTML = '';
+    if (!filteredPositions.length) { renderEmpty(); loadMoreWrap.innerHTML = ''; return; }
+    const slice = filteredPositions.slice(0, displayedCount);
+    slice.forEach(p => {
+      const logoSrc = p.logoUrl ? ((/^https?:\/\//i.test(p.logoUrl) || p.logoUrl.startsWith('/')) ? p.logoUrl : 'assets/' + p.logoUrl) : '';
+      const card = document.createElement('article');
+      card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px;transition:border-color 0.2s,transform 0.2s;';
+      card.onmouseenter = () => { card.style.borderColor = 'rgba(200,245,74,0.25)'; card.style.transform = 'translateY(-2px)'; };
+      card.onmouseleave = () => { card.style.borderColor = 'var(--border)'; card.style.transform = 'translateY(0)'; };
+      card.innerHTML = `
+        ${logoSrc ? `<img src="${logoSrc}" alt="${p.company} logo" style="height:36px;width:auto;border-radius:8px;object-fit:contain;margin-bottom:14px;" onerror="this.style.display='none'">` : ''}
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;">
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin-bottom:4px;">${p.title}</div>
+            <div style="font-size:13px;color:var(--muted);">${p.company} · ${p.city}${p.location && p.location !== p.city ? ' · ' + p.location : ''}</div>
+          </div>
+          <span class="tag" style="flex-shrink:0;">${p.subject}</span>
+        </div>
+        <p style="font-size:14px;color:var(--text-2);line-height:1.6;">${p.desc}</p>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <span class="verify-badge" style="font-size:10px;padding:3px 10px;">Verified</span>
+        </div>`;
+      listings.appendChild(card);
+    });
+    loadMoreWrap.innerHTML = displayedCount < filteredPositions.length
+      ? `<button class="btn-secondary" id="load-more-btn" style="padding:12px 28px;">Load more positions</button>`
+      : '';
+    const btn = document.getElementById('load-more-btn');
+    if (btn) btn.addEventListener('click', () => { displayedCount += PAGE_SIZE; renderSlice(); });
+  }
+
+  function applyFilters() {
+    const loc = (locationInput.value || '').trim().toLowerCase();
+    const sub = (subjectInput.value  || '').trim().toLowerCase();
+    filteredPositions = positionsAll.filter(p => {
+      const locMatch = !loc || loc === 'all' || p.city.toLowerCase() === loc;
+      const subMatch = !sub || sub === 'all' || p.subject.toLowerCase() === sub;
+      return locMatch && subMatch;
+    });
+    displayedCount = PAGE_SIZE;
+    renderSlice();
+  }
+
+  locationInput.addEventListener('change', applyFilters);
+  subjectInput.addEventListener('change', applyFilters);
+  clearBtn.addEventListener('click', () => { locationInput.value = ''; subjectInput.value = ''; applyFilters(); });
+
+  (async () => { await loadPositions(); populateFilters(); applyFilters(); })();
+</script>
 </body>
 </html>
