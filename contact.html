@@ -4,55 +4,148 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact — SM Intern</title>
+  <meta name="description" content="Get in touch with SM Intern — for businesses looking to list a position or students with questions." />
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <div class="brand">
-        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="positions.html">Positions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="profile.html">Profile</a>
-        <a href="login.html">Login</a>
-      </nav>
-    </header>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
 
-    <main class="page-panel">
-      <h1>Contact</h1>
-
-      <section>
-        <h2>For SMEs</h2>
-        <form action="https://formspree.io/f/xbdbaeyk" method="POST">
-          <input type="text" name="company" placeholder="Company name" required />
-          <input type="email" name="email" placeholder="Your work email" required />
-          <textarea name="message" placeholder="Tell us about your project or role" required></textarea>
-          <button class="button-primary" type="submit">Send to SM Intern</button>
-        </form>
-      </section>
-
-      <section>
-        <h2>For Students</h2>
-        <p>Looking for roles? See available opportunities on the <a href="positions.html">Positions</a> page.</p>
-      </section>
-
-      <section>
-        <h2>Direct contact</h2>
-        <p>Email: <a href="mailto:hello@smintern.co.uk">hello@smintern.co.uk</a></p>
-      </section>
-    </main>
-
-    <footer>
-      <span>Email: hello@smintern.co.uk</span>
-      <span>© 2026 SM Intern</span>
-      <span style="margin-left:16px;"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
-    </footer>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-mark">SM</div>
+      <span class="brand-name">SM <span>Intern</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="positions.html">Positions</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">Profile</a>
+      <a href="login.html"   id="nav-login"   class="btn-ghost">Sign in</a>
+      <a href="login.html"   id="nav-register" class="btn-accent">Register</a>
+      <a href="#"            id="nav-logout"   class="btn-ghost" style="display:none">Sign out</a>
+    </div>
   </div>
+</header>
+
+<div class="site-wrap">
+
+  <section style="padding:72px 0 48px;">
+    <div class="section-label">Get in touch</div>
+    <h1 class="page-title">Let's talk.</h1>
+    <p style="font-size:1.05rem;max-width:480px;margin-top:18px;">
+      Whether you're a business looking to post a position or a student with a question, we want to hear from you.
+    </p>
+  </section>
+
+  <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;" class="contact-grid">
+
+    <!-- SME FORM -->
+    <div class="card" style="padding:40px;">
+      <div class="section-label" style="margin-bottom:18px;">For businesses</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;">List a position</h2>
+      <p style="font-size:14px;margin-bottom:28px;">Tell us about your project and we'll be in touch to get your listing verified and live.</p>
+      <div class="msg" id="contact-msg"></div>
+      <form action="https://formspree.io/f/xbdbaeyk" method="POST" id="contact-form" style="display:flex;flex-direction:column;gap:0;">
+        <div class="form-field">
+          <label for="company">Company name</label>
+          <input id="company" type="text" name="company" placeholder="Acme Ltd" required />
+        </div>
+        <div class="form-field">
+          <label for="email">Work email</label>
+          <input id="email" type="email" name="email" placeholder="you@company.com" required />
+        </div>
+        <div class="form-field">
+          <label for="message">Project brief</label>
+          <textarea id="message" name="message" placeholder="Tell us about the project, skills needed, and timeline…" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:8px;">Send to SM Intern →</button>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card">
+        <div style="font-size:24px;margin-bottom:14px;">🎓</div>
+        <div class="card-title" style="margin-bottom:8px;">For students</div>
+        <p style="font-size:14px;">Looking for roles? Browse live positions on the Positions page — it's free to apply.</p>
+        <a href="positions.html" class="btn-secondary" style="margin-top:18px;display:inline-flex;">View positions →</a>
+      </div>
+
+      <div class="card">
+        <div style="font-size:24px;margin-bottom:14px;">📧</div>
+        <div class="card-title" style="margin-bottom:8px;">Direct contact</div>
+        <p style="font-size:14px;margin-bottom:16px;">Prefer to email directly? Reach us at:</p>
+        <a href="mailto:hello@smintern.co.uk" style="color:var(--accent);font-weight:600;font-size:14px;">hello@smintern.co.uk</a>
+      </div>
+
+      <div class="card">
+        <div style="font-size:24px;margin-bottom:14px;">💼</div>
+        <div class="card-title" style="margin-bottom:8px;">Follow us</div>
+        <p style="font-size:14px;margin-bottom:16px;">Stay up to date with new positions and company news.</p>
+        <a href="https://www.linkedin.com/company/smintern" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600;font-size:14px;">LinkedIn →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="brand-mark" style="width:26px;height:26px;font-size:10px;border-radius:6px;">SM</div>
+      <span>© 2026 SM Intern</span>
+    </div>
+    <span>hello@smintern.co.uk</span>
+    <div style="display:flex;gap:16px;">
+      <a href="https://www.linkedin.com/company/smintern" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+    authDomain: "sminternweb.firebaseapp.com",
+    projectId: "sminternweb",
+    storageBucket: "sminternweb.firebasestorage.app",
+    messagingSenderId: "132023235004",
+    appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const navProfile  = document.getElementById('nav-profile');
+  const navLogin    = document.getElementById('nav-login');
+  const navRegister = document.getElementById('nav-register');
+  const navLogout   = document.getElementById('nav-logout');
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      navProfile.style.display  = 'inline-flex';
+      navLogout.style.display   = 'inline-flex';
+      navLogin.style.display    = 'none';
+      navRegister.style.display = 'none';
+    } else {
+      navProfile.style.display  = 'none';
+      navLogout.style.display   = 'none';
+      navLogin.style.display    = 'inline-flex';
+      navRegister.style.display = 'inline-flex';
+    }
+  });
+  navLogout.addEventListener('click', async e => { e.preventDefault(); await signOut(auth); window.location.href = 'index.html'; });
+</script>
+<style>
+  @media (max-width: 720px) {
+    .contact-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
 </body>
 </html>
