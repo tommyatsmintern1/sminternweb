@@ -3,90 +3,193 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>How it works — SM Intern</title>
+  <title>How It Works — SM Intern</title>
+  <meta name="description" content="Learn how SM Intern connects students with verified UK businesses for meaningful internship projects." />
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <div class="brand">
-        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="positions.html">Positions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="profile.html">Profile</a>
-        <a href="login.html">Login</a>
-      </nav>
-    </header>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
 
-    <main class="page-panel">
-      <h1>How SM Intern works</h1>
-
-      <h2>For Students</h2>
-      <div class="card-grid">
-        <div class="feature-card">
-          <h3>1. Find projects</h3>
-          <p>Browse verified opportunities from local SMEs.</p>
-        </div>
-        <div class="feature-card">
-          <h3>2. Apply</h3>
-          <p>Send a short proposal highlighting your skills.</p>
-        </div>
-        <div class="feature-card">
-          <h3>3. Work & learn</h3>
-          <p>Complete the project while receiving feedback and mentorship.</p>
-        </div>
-      </div>
-
-      <h2>For Businesses</h2>
-      <div class="card-grid">
-        <div class="feature-card">
-          <h3>1. List a project</h3>
-          <p>Describe the deliverables and skills required.</p>
-        </div>
-        <div class="feature-card">
-          <h3>2. Receive matches</h3>
-          <p>We curate candidates who fit your brief.</p>
-        </div>
-        <div class="feature-card">
-          <h3>3. Onboard</h3>
-          <p>Use guided templates to bring interns up to speed.</p>
-        </div>
-      </div>
-
-      <h2>How we verify businesses</h2>
-      <p>Every business gets a verification badge. Here's our process:</p>
-      <div class="card-grid">
-        <div class="feature-card">
-          <h3>Step 1 — Companies House check</h3>
-          <p>We search your business at find-and-update.company-information.service.gov.uk to confirm you're a registered UK company.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Step 2 — Online presence</h3>
-          <p>We verify you have a working website or active social media. This filters out fake listings instantly.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Step 3 — Email confirmation</h3>
-          <p>We send a confirmation email from hello@smintern.co.uk to confirm your listing is live and verify your email is real.</p>
-        </div>
-      </div>
-      <p><strong>Once verified, your listing displays the SM Intern verification badge.</strong></p>
-
-      <div style="margin-top:24px">
-        <a class="button-primary" href="index.html#waitlist">Join the waitlist</a>
-      </div>
-    </main>
-
-    <footer>
-      <span>Email: hello@smintern.co.uk</span>
-      <span>© 2026 SM Intern</span>
-      <span style="margin-left:16px;"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
-    </footer>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-mark">SM</div>
+      <span class="brand-name">SM <span>Intern</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html" class="active">How it works</a>
+      <a href="positions.html">Positions</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="profile.html" id="nav-profile" class="btn-ghost" style="display:none">Profile</a>
+      <a href="login.html"   id="nav-login"   class="btn-ghost">Sign in</a>
+      <a href="login.html"   id="nav-register" class="btn-accent">Register</a>
+      <a href="#"            id="nav-logout"   class="btn-ghost" style="display:none">Sign out</a>
+    </div>
   </div>
+</header>
+
+<div class="site-wrap">
+
+  <section style="padding:72px 0 48px;">
+    <div class="section-label">Platform guide</div>
+    <h1 class="page-title">How SM Intern<br><span class="accent-text">works</span></h1>
+    <p style="font-size:1.05rem;max-width:520px;margin-top:18px;">
+      A simple, structured process that works for both sides — students get real experience, businesses get motivated talent.
+    </p>
+  </section>
+
+  <!-- FOR STUDENTS -->
+  <section style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:44px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+      <span class="tag">Students</span>
+      <span style="font-size:14px;color:var(--muted);">Free to join</span>
+    </div>
+    <div class="grid-3">
+      <div style="padding:28px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="step-num">1</div>
+        <div class="card-title" style="margin-bottom:10px;">Find projects</div>
+        <p style="font-size:14px;">Browse verified opportunities from local SMEs. Filter by subject, location, and type to find the right fit.</p>
+      </div>
+      <div style="padding:28px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="step-num">2</div>
+        <div class="card-title" style="margin-bottom:10px;">Apply</div>
+        <p style="font-size:14px;">Send a short proposal that highlights your skills and why you're a great match. No lengthy CV portals.</p>
+      </div>
+      <div style="padding:28px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="step-num">3</div>
+        <div class="card-title" style="margin-bottom:10px;">Work &amp; learn</div>
+        <p style="font-size:14px;">Complete the project with real mentorship, earn a reference, and build portfolio-worthy experience.</p>
+      </div>
+    </div>
+    <div style="margin-top:28px;">
+      <a href="positions.html" class="btn-primary">Browse positions →</a>
+    </div>
+  </section>
+
+  <!-- FOR BUSINESSES -->
+  <section style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:44px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+      <span class="tag" style="border-color:rgba(74,245,200,0.25);background:rgba(74,245,200,0.07);color:var(--accent2);">Businesses</span>
+      <span style="font-size:14px;color:var(--muted);">From £89 per listing</span>
+    </div>
+    <div class="grid-3">
+      <div style="padding:28px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="step-num" style="border-color:rgba(74,245,200,0.3);color:var(--accent2);">1</div>
+        <div class="card-title" style="margin-bottom:10px;">List a project</div>
+        <p style="font-size:14px;">Describe your deliverables, required skills, and timeline. We make the listing process quick and guided.</p>
+      </div>
+      <div style="padding:28px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="step-num" style="border-color:rgba(74,245,200,0.3);color:var(--accent2);">2</div>
+        <div class="card-title" style="margin-bottom:10px;">Receive matches</div>
+        <p style="font-size:14px;">We curate candidates who fit your brief. Pro plans include full shortlisting by our team so you don't have to sift applications.</p>
+      </div>
+      <div style="padding:28px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="step-num" style="border-color:rgba(74,245,200,0.3);color:var(--accent2);">3</div>
+        <div class="card-title" style="margin-bottom:10px;">Onboard</div>
+        <p style="font-size:14px;">Use our guided onboarding templates to bring interns up to speed fast. Structured from day one.</p>
+      </div>
+    </div>
+    <div style="margin-top:28px;">
+      <a href="contact.html" class="btn-primary">Post a position →</a>
+    </div>
+  </section>
+
+  <!-- VERIFICATION PROCESS -->
+  <section class="page-section">
+    <div class="section-label">Trust &amp; safety</div>
+    <h2 class="section-title">How we verify businesses</h2>
+    <p style="max-width:520px;margin-bottom:32px;">
+      Every business earns a verification badge before going live. Here's exactly what we check:
+    </p>
+    <div class="grid-3">
+      <div class="card" style="position:relative;overflow:visible;">
+        <div style="position:absolute;top:-12px;left:24px;background:var(--bg);padding:0 8px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;">Step 1</div>
+        <div style="font-size:24px;margin-bottom:14px;">🏛️</div>
+        <div class="card-title" style="margin-bottom:10px;">Companies House</div>
+        <p style="font-size:14px;">We search your business at the official Companies House registry to confirm you're a registered UK company. No real registration — no listing.</p>
+      </div>
+      <div class="card" style="position:relative;overflow:visible;">
+        <div style="position:absolute;top:-12px;left:24px;background:var(--bg);padding:0 8px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;">Step 2</div>
+        <div style="font-size:24px;margin-bottom:14px;">🌐</div>
+        <div class="card-title" style="margin-bottom:10px;">Online presence</div>
+        <p style="font-size:14px;">We verify you have a working website or active social media. This instantly filters out fake or ghost listings before any student sees them.</p>
+      </div>
+      <div class="card" style="position:relative;overflow:visible;">
+        <div style="position:absolute;top:-12px;left:24px;background:var(--bg);padding:0 8px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;">Step 3</div>
+        <div style="font-size:24px;margin-bottom:14px;">📧</div>
+        <div class="card-title" style="margin-bottom:10px;">Email confirmation</div>
+        <p style="font-size:14px;">We send a confirmation from hello@smintern.co.uk to verify your email is real and your listing is intentional. Simple and effective.</p>
+      </div>
+    </div>
+    <div style="margin-top:28px;padding:20px 24px;background:var(--accent-wash);border:1px solid rgba(200,245,74,0.2);border-radius:var(--radius);display:inline-flex;align-items:center;gap:12px;">
+      <span class="verify-badge">SM Intern Verified</span>
+      <span style="font-size:14px;color:var(--text-2);">Once verified, your listing displays this badge — building instant trust with students.</span>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="margin-top:48px;text-align:center;">
+    <h2 class="section-title" style="margin-bottom:12px;">Ready to get started?</h2>
+    <p style="max-width:400px;margin:0 auto 28px;">Join the waitlist or create an account today.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="login.html" class="btn-primary">Create account →</a>
+      <a href="index.html#waitlist" class="btn-secondary">Join waitlist</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="brand-mark" style="width:26px;height:26px;font-size:10px;border-radius:6px;">SM</div>
+      <span>© 2026 SM Intern</span>
+    </div>
+    <span>hello@smintern.co.uk</span>
+    <div style="display:flex;gap:16px;">
+      <a href="https://www.linkedin.com/company/smintern" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+    authDomain: "sminternweb.firebaseapp.com",
+    projectId: "sminternweb",
+    storageBucket: "sminternweb.firebasestorage.app",
+    messagingSenderId: "132023235004",
+    appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const navProfile  = document.getElementById('nav-profile');
+  const navLogin    = document.getElementById('nav-login');
+  const navRegister = document.getElementById('nav-register');
+  const navLogout   = document.getElementById('nav-logout');
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      navProfile.style.display  = 'inline-flex';
+      navLogout.style.display   = 'inline-flex';
+      navLogin.style.display    = 'none';
+      navRegister.style.display = 'none';
+    } else {
+      navProfile.style.display  = 'none';
+      navLogout.style.display   = 'none';
+      navLogin.style.display    = 'inline-flex';
+      navRegister.style.display = 'inline-flex';
+    }
+  });
+  navLogout.addEventListener('click', async e => { e.preventDefault(); await signOut(auth); window.location.href = 'index.html'; });
+</script>
 </body>
 </html>
