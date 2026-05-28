@@ -3,206 +3,304 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SM Intern — Student Profile</title>
+  <title>My Profile — SM Intern</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    .profile-container { max-width: 900px; margin: 24px auto; padding: 20px; }
-    .card { background:#fff;border-radius:8px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,0.06);} 
-    .grid { display:grid; grid-template-columns: 1fr 360px; gap:20px; }
-    .form-group { margin-bottom:12px; }
-    .form-group label { display:block; font-weight:600; margin-bottom:6px; }
-    input[type=text], input[type=email], textarea, select { width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; }
-    button.button-primary { background:#000;color:#fff;padding:10px 14px;border-radius:6px;border:none;cursor:pointer }
-    #apps-list { margin-top:12px; }
-    .app-item { border:1px solid #eee; padding:10px; border-radius:6px; margin-bottom:8px; }
-    #loading { text-align:center; padding:40px; }
-  </style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <div class="brand">
-        <img src="assets/logo.png" alt="SM INTERN logo" class="site-logo" onerror="this.onerror=null;this.src='assets/logo.svg'" />
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-mark">SM</div>
+      <span class="brand-name">SM <span>Intern</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="positions.html">Positions</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="profile.html" class="btn-ghost" style="color:var(--accent);">Profile</a>
+      <a href="#" id="nav-logout" class="btn-ghost">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<!-- LOADING STATE -->
+<div id="loading" style="position:relative;z-index:1;text-align:center;padding:100px 24px;">
+  <div style="width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 16px;"></div>
+  <p style="color:var(--muted);font-size:14px;">Loading your profile…</p>
+</div>
+
+<!-- PROFILE CONTENT -->
+<div id="profile-content" style="display:none;">
+<div class="site-wrap">
+
+  <!-- HEADER ROW -->
+  <section style="padding:48px 0 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <div id="profile-avatar" style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--bg);flex-shrink:0;">?</div>
+      <div>
+        <div class="section-label" style="margin-bottom:4px;">Student profile</div>
+        <div id="profile-name-display" style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.3rem;color:var(--text);">Your profile</div>
+        <div id="profile-email-display" style="font-size:13px;color:var(--muted);margin-top:2px;">—</div>
       </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="positions.html">Positions</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="profile.html">Profile</a>
-        <a href="#" id="nav-logout">Logout</a>
-      </nav>
-    </header>
+    </div>
+    <button id="signout-btn" style="padding:9px 20px;background:rgba(245,86,74,0.1);border:1px solid rgba(245,86,74,0.2);border-radius:999px;color:#f5564a;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;transition:background 0.15s;">Sign out</button>
+  </section>
 
-    <div id="loading">Checking authorization...</div>
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;" class="profile-grid">
 
-    <section id="profile-content" style="display:none;">
-      <div class="profile-container">
-        <div class="grid">
-          <div>
-            <div class="card">
-              <h2 style="margin-top:0;">Your Student Profile</h2>
-              <form id="profile-form">
-                <div class="form-group">
-                  <label>Account Email</label>
-                  <input type="email" id="display-email" disabled />
-                </div>
-                <div class="form-group">
-                  <label for="full-name">Full name</label>
-                  <input id="full-name" type="text" />
-                </div>
-                <div class="form-group">
-                  <label for="university">University / College</label>
-                  <input id="university" type="text" />
-                </div>
-                <div class="form-group">
-                  <label for="major">Field of study</label>
-                  <input id="major" type="text" />
-                </div>
-                <div class="form-group">
-                  <label for="grad-year">Graduation year</label>
-                  <select id="grad-year"><option>2026</option><option>2027</option><option>2028</option></select>
-                </div>
-                <div class="form-group">
-                  <label for="skills">Key skills (comma separated)</label>
-                  <input id="skills" type="text" />
-                </div>
-                <div class="form-group">
-                  <label for="bio">Short bio / pitch</label>
-                  <textarea id="bio" rows="4"></textarea>
-                </div>
-                <div style="display:flex;gap:8px;">
-                  <button type="submit" class="button-primary">Save profile</button>
-                </div>
-              </form>
+    <!-- LEFT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <!-- PROFILE FORM -->
+      <div class="card" style="padding:36px;">
+        <div class="section-label" style="margin-bottom:18px;">Edit profile</div>
+        <div class="msg" id="profile-msg"></div>
+        <form id="profile-form" style="display:flex;flex-direction:column;gap:0;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-field">
+              <label for="full-name">Full name</label>
+              <input id="full-name" type="text" placeholder="Jane Smith" />
             </div>
-
-            <div class="card" style="margin-top:16px;">
-              <h3>Your Applications</h3>
-              <div id="apps-list">No applications yet.</div>
-              <hr />
-              <form id="app-form">
-                <div class="form-group"><label for="app-role">Position</label><input id="app-role" type="text" required /></div>
-                <div class="form-group"><label for="app-note">Note</label><input id="app-note" type="text" /></div>
-                <button type="submit" class="button-primary">Add application</button>
-              </form>
+            <div class="form-field">
+              <label for="university">University / College</label>
+              <input id="university" type="text" placeholder="University of Exeter" />
             </div>
           </div>
-
-          <aside>
-            <div class="card">
-              <h3>Account</h3>
-              <p id="account-email">—</p>
-              <button id="signout-btn" class="button-primary" style="background:#eee;color:#000;margin-top:8px;">Sign out</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-field">
+              <label for="major">Field of study</label>
+              <input id="major" type="text" placeholder="Engineering" />
             </div>
-          </aside>
+            <div class="form-field">
+              <label for="grad-year">Graduation year</label>
+              <select id="grad-year">
+                <option>2025</option>
+                <option>2026</option>
+                <option>2027</option>
+                <option>2028</option>
+                <option>2029</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="skills">Key skills <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);font-size:11px;">(comma separated)</span></label>
+            <input id="skills" type="text" placeholder="Python, Marketing, Figma, Excel…" />
+          </div>
+          <div class="form-field">
+            <label for="bio">Short bio / pitch</label>
+            <textarea id="bio" placeholder="A short paragraph about you — what you're studying, what you're looking for, and what makes you great." style="min-height:120px;"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" id="save-btn" style="align-self:flex-start;padding:12px 28px;">Save profile</button>
+        </form>
+      </div>
+
+      <!-- APPLICATIONS -->
+      <div class="card" style="padding:36px;">
+        <div class="section-label" style="margin-bottom:18px;">My applications</div>
+        <div id="apps-list">
+          <p style="font-size:14px;color:var(--muted);">No applications tracked yet.</p>
+        </div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;">Track an application</div>
+          <form id="app-form" style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="form-field">
+                <label for="app-role">Position title</label>
+                <input id="app-role" type="text" placeholder="Marketing Intern" required />
+              </div>
+              <div class="form-field">
+                <label for="app-note">Note (optional)</label>
+                <input id="app-note" type="text" placeholder="Applied via SM Intern" />
+              </div>
+            </div>
+            <button type="submit" class="btn-secondary" style="align-self:flex-start;padding:10px 22px;font-size:13.5px;">Add application</button>
+          </form>
         </div>
       </div>
-    </section>
+    </div>
 
-    <footer>
-      <span>Email: hello@smintern.co.uk</span>
-      <span><a href="https://www.linkedin.com/company/smintern">LinkedIn</a></span>
-      <span>© 2026 SM Intern</span>
-      <span style="margin-left:16px;"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
-    </footer>
+    <!-- RIGHT SIDEBAR -->
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card" style="padding:26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-family:'Syne',sans-serif;">Account</div>
+        <div id="account-email" style="font-size:14px;color:var(--text-2);margin-bottom:4px;">—</div>
+        <div style="font-size:12px;color:var(--muted);">Signed in via Firebase Auth</div>
+      </div>
+      <div class="card" style="padding:26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-family:'Syne',sans-serif;">Quick links</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="positions.html" style="font-size:14px;color:var(--accent);font-weight:500;">Browse positions →</a>
+          <a href="how-it-works.html" style="font-size:14px;color:var(--text-2);">How it works</a>
+          <a href="contact.html" style="font-size:14px;color:var(--text-2);">Contact us</a>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
+</div>
 
-  <script type="module">
-    import { signOut, onAuth } from './assets/js/firebase-auth.js';
-    import { saveProfile, loadProfile, loadApplications, addApplication } from './assets/js/profile.js';
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="brand-mark" style="width:26px;height:26px;font-size:10px;border-radius:6px;">SM</div>
+      <span>© 2026 SM Intern</span>
+    </div>
+    <span>hello@smintern.co.uk</span>
+    <div style="display:flex;gap:16px;">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
 
-    const loading = document.getElementById('loading');
-    const profileContent = document.getElementById('profile-content');
-    const profileForm = document.getElementById('profile-form');
-    const displayEmail = document.getElementById('display-email');
-    const accountEmail = document.getElementById('account-email');
-    const signoutBtn = document.getElementById('signout-btn');
-    const appsList = document.getElementById('apps-list');
-    const appForm = document.getElementById('app-form');
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 860px) {
+    .profile-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 540px) {
+    form .grid-2-form { grid-template-columns: 1fr !important; }
+  }
+</style>
 
-    let currentUid = null;
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore, doc, getDoc, setDoc,
+    collection, getDocs, addDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    function renderApps(items) {
-      if (!items || items.length === 0) {
-        appsList.innerText = 'No applications yet.';
-        return;
-      }
-      appsList.innerHTML = items.map(a => `<div class="app-item"><strong>${a.role||'Untitled'}</strong><div style="font-size:13px;color:#555">${a.note||''}</div><div style="font-size:12px;color:#999">${a.createdAt||''}</div></div>`).join('');
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQHXkzFt8qKCbp3lXhM2J4u5Y00onbFFo",
+    authDomain: "sminternweb.firebaseapp.com",
+    projectId: "sminternweb",
+    storageBucket: "sminternweb.firebasestorage.app",
+    messagingSenderId: "132023235004",
+    appId: "1:132023235004:web:a0b1c6101a6cc0e07dbbb9"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  const $    = id => document.getElementById(id);
+
+  const showMsg = (id, text, type) => { const el=$(id); el.textContent=text; el.className=`msg ${type}`; setTimeout(()=>{ el.className='msg'; }, 4000); };
+
+  function renderApps(items) {
+    const el = $('apps-list');
+    if (!items || !items.length) {
+      el.innerHTML = '<p style="font-size:14px;color:var(--muted);">No applications tracked yet.</p>';
+      return;
     }
+    el.innerHTML = items.map(a => `
+      <div style="padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;">${a.role || 'Untitled'}</div>
+        ${a.note ? `<div style="font-size:13px;color:var(--text-2);">${a.note}</div>` : ''}
+        ${a.createdAt ? `<div style="font-size:11px;color:var(--muted);margin-top:6px;">${a.createdAt}</div>` : ''}
+      </div>`).join('');
+  }
 
-    onAuth(async (user) => {
-      if (user) {
-        currentUid = user.uid;
-        loading.style.display = 'none';
-        profileContent.style.display = '';
-        displayEmail.value = user.email;
-        accountEmail.innerText = user.email;
+  let currentUid = null;
 
-        // load profile
-        try {
-          const p = await loadProfile(user.uid);
-          if (p) {
-            document.getElementById('full-name').value = p.fullName || '';
-            document.getElementById('university').value = p.university || '';
-            document.getElementById('major').value = p.major || '';
-            document.getElementById('grad-year').value = p.gradYear || '2026';
-            document.getElementById('skills').value = p.skills || '';
-            document.getElementById('bio').value = p.bio || '';
-          }
-        } catch (err) { console.error('Load profile failed', err); }
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+    currentUid = user.uid;
+    $('loading').style.display       = 'none';
+    $('profile-content').style.display = '';
 
-        // load applications
-        try {
-          const apps = await loadApplications(user.uid);
-          renderApps(apps);
-        } catch (err) { console.error('Load apps failed', err); }
-      } else {
-        // not logged in -> redirect to login
-        window.location.href = 'login.html';
+    // Set avatar & email displays
+    const initial = (user.displayName || user.email || '?')[0].toUpperCase();
+    $('profile-avatar').textContent         = initial;
+    $('profile-name-display').textContent   = user.displayName || 'Your profile';
+    $('profile-email-display').textContent  = user.email;
+    $('account-email').textContent          = user.email;
+
+    // Load profile from Firestore
+    try {
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      if (snap.exists()) {
+        const p = snap.data();
+        $('full-name').value   = p.fullName  || '';
+        $('university').value  = p.university || '';
+        $('major').value       = p.major      || '';
+        $('grad-year').value   = p.gradYear   || '2026';
+        $('skills').value      = p.skills     || '';
+        $('bio').value         = p.bio        || '';
+        if (p.fullName) $('profile-name-display').textContent = p.fullName;
       }
-    });
+    } catch (err) { console.error('Load profile:', err); }
 
-    profileForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!currentUid) return alert('Not signed in');
-      const data = {
-        fullName: document.getElementById('full-name').value.trim(),
-        university: document.getElementById('university').value.trim(),
-        major: document.getElementById('major').value.trim(),
-        gradYear: document.getElementById('grad-year').value,
-        skills: document.getElementById('skills').value.trim(),
-        bio: document.getElementById('bio').value.trim()
-      };
-      try {
-        await saveProfile(currentUid, data);
-        alert('Profile saved');
-      } catch (err) {
-        console.error(err);
-        alert('Failed to save profile');
-      }
-    });
+    // Load applications
+    try {
+      const snap = await getDocs(collection(db, 'users', user.uid, 'applications'));
+      const apps = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderApps(apps);
+    } catch (err) { console.error('Load apps:', err); }
+  });
 
-    signoutBtn.addEventListener('click', async () => {
-      try { await signOut(); window.location.href = 'login.html'; } catch (err) { console.error(err); }
-    });
+  // Save profile
+  $('profile-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!currentUid) return;
+    const btn = $('save-btn');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    const data = {
+      fullName:   $('full-name').value.trim(),
+      university: $('university').value.trim(),
+      major:      $('major').value.trim(),
+      gradYear:   $('grad-year').value,
+      skills:     $('skills').value.trim(),
+      bio:        $('bio').value.trim(),
+      updatedAt:  new Date().toISOString()
+    };
+    try {
+      await setDoc(doc(db, 'users', currentUid), data, { merge: true });
+      showMsg('profile-msg', 'Profile saved successfully.', 'success');
+      if (data.fullName) $('profile-name-display').textContent = data.fullName;
+    } catch (err) {
+      showMsg('profile-msg', 'Failed to save — please try again.', 'error');
+    }
+    btn.disabled = false; btn.textContent = 'Save profile';
+  });
 
-    appForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!currentUid) return alert('Not signed in');
-      const role = document.getElementById('app-role').value.trim();
-      const note = document.getElementById('app-note').value.trim();
-      try {
-        await addApplication(currentUid, { role, note });
-        // reload apps
-        const apps = await loadApplications(currentUid);
-        renderApps(apps);
-        appForm.reset();
-      } catch (err) { console.error(err); alert('Failed to add application'); }
-    });
-  </script>
+  // Add application
+  $('app-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!currentUid) return;
+    const role = $('app-role').value.trim();
+    const note = $('app-note').value.trim();
+    try {
+      await addDoc(collection(db, 'users', currentUid, 'applications'), {
+        role, note, createdAt: new Date().toLocaleDateString('en-GB')
+      });
+      const snap = await getDocs(collection(db, 'users', currentUid, 'applications'));
+      renderApps(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      $('app-form').reset();
+    } catch (err) { alert('Failed to add application. Please try again.'); }
+  });
 
+  // Sign out
+  $('signout-btn').addEventListener('click', async () => {
+    await signOut(auth);
+    window.location.href = 'login.html';
+  });
+  $('nav-logout').addEventListener('click', async e => {
+    e.preventDefault();
+    await signOut(auth);
+    window.location.href = 'login.html';
+  });
+</script>
 </body>
 </html>
